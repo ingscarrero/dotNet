@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{49EF75F0-469B-468E-823D-BD38D1AD991B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SOFTTEK.SCMS.Entity</RootNamespace>
+    <AssemblyName>SOFTTEK.SCMS.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FA\AvailabilityForecast.cs" />
+    <Compile Include="FA\AvailabilityForecastItem.cs" />
+    <Compile Include="FA\FixedAsset.cs" />
+    <Compile Include="FA\NoveltyRequest.cs" />
+    <Compile Include="FA\PurchaseRequest.cs" />
+    <Compile Include="FA\PhysicalInventoryTakingItem.cs" />
+    <Compile Include="FA\PhysicalInventoryTaking.cs" />
+    <Compile Include="FA\Provider.cs" />
+    <Compile Include="FA\Request.cs" />
+    <Compile Include="FA\RetirementRequest.cs" />
+    <Compile Include="FA\TechnicalEvaluationRequest.cs" />
+    <Compile Include="FA\TransferRequest.cs" />
+    <Compile Include="FA\WorkOrder.cs" />
+    <Compile Include="PM\Activity.cs" />
+    <Compile Include="PM\Advice.cs" />
+    <Compile Include="PM\ComponentReplacement.cs" />
+    <Compile Include="PM\Measure.cs" />
+    <Compile Include="PM\MeasurementDocument.cs" />
+    <Compile Include="PM\Notifications.cs" />
+    <Compile Include="PM\TechnicalObject.cs" />
+    <Compile Include="Shared\Asset.cs" />
+    <Compile Include="PM\MaintenancePlan.cs" />
+    <Compile Include="PM\Material.cs" />
+    <Compile Include="PM\Task.cs" />
+    <Compile Include="PM\WorkOrder.cs" />
+    <Compile Include="Shared\ApiError.cs" />
+    <Compile Include="SRA\DetailedActivity.cs" />
+    <Compile Include="Shared\Category.cs" />
+    <Compile Include="Shared\Employee.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared\Contact.cs" />
+    <Compile Include="Shared\Parameter.cs" />
+    <Compile Include="Shared\Person.cs" />
+    <Compile Include="SRA\Activity.cs" />
+    <Compile Include="SRA\Mobile\HomeItem.cs" />
+    <Compile Include="Security\Token.cs" />
+    <Compile Include="Security\User.cs" />
+    <Compile Include="SRA\PermitsAndAbsences.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ARS\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SOFTTEK.SF.DataModel\SOFTTEK.SF.DataModel.csproj">
+      <Project>{4901ba99-42c1-4bb0-9e56-95d76126de31}</Project>
+      <Name>SOFTTEK.SF.DataModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

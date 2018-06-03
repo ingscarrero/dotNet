@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[TBL_FAM_INVENTORY]
+(
+	[fa_inventory_number] NVARCHAR(20) NOT NULL PRIMARY KEY, 
+    [fa_number] NVARCHAR(20) NOT NULL, 
+    [fa_subnumber] NVARCHAR(20) NULL, 
+    [fa_denomination] NVARCHAR(50) NOT NULL, 
+    [fa_class] NVARCHAR(50) NOT NULL, 
+    [fa_type] NVARCHAR(50) NOT NULL, 
+    [fa_sn] NVARCHAR(20) NOT NULL, 
+    [fa_removal_mark] BIT NULL, 
+    [fa_entry_locked] BIT NULL, 
+    [fa_cost_center] INT NOT NULL, 
+    [fa_profit_center] INT NOT NULL, 
+    [fa_usage] NVARCHAR(50) NOT NULL, 
+    [fa_supernumber] NVARCHAR(50) NULL, 
+    [fa_capitalization_at] DATETIME NULL, 
+    [fa_decapitalization_at] DATETIME NULL, 
+    [fa_last_disposal_at] DATETIME NULL, 
+    [fa_entry_at] DATETIME NULL, 
+    [fa_created_at] DATETIME NOT NULL DEFAULT GETDATE(), 
+    [fa_created_by] NVARCHAR(20) NOT NULL, 
+    [fa_modified_at] DATETIME NULL, 
+    [fa_modified_by] NVARCHAR(20) NULL, 
+    [fa_state] NVARCHAR(20) NOT NULL
+)

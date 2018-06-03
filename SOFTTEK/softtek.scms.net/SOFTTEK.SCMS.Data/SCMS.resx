@@ -1,0 +1,399 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="FA_SP_Insert_AvailabilityForecast" xml:space="preserve">
+    <value>spFAMAddAvailabilityForecast</value>
+  </data>
+  <data name="FA_SP_Insert_AvailabilityForecastItem" xml:space="preserve">
+    <value>spFAMAddAvailabilityForecastItem</value>
+  </data>
+  <data name="FA_SP_Insert_FixedAsset" xml:space="preserve">
+    <value>spFAMAddFixedAsset</value>
+  </data>
+  <data name="FA_SP_Insert_NoveltyRequest" xml:space="preserve">
+    <value>spFAMAddNovelty</value>
+  </data>
+  <data name="FA_SP_Insert_PhysicalInventoryTaking" xml:space="preserve">
+    <value>spFAMAddInventoryTaking</value>
+  </data>
+  <data name="FA_SP_Insert_PhysicalInventoryTakingItem" xml:space="preserve">
+    <value>spFAMAddInventoryItem</value>
+  </data>
+  <data name="FA_SP_Insert_Provider" xml:space="preserve">
+    <value>spFAMAddProvider</value>
+  </data>
+  <data name="FA_SP_Insert_PurchaseRequest" xml:space="preserve">
+    <value>spFAMAddPurchaseRequest</value>
+  </data>
+  <data name="FA_SP_Insert_Request" xml:space="preserve">
+    <value>spFAMAddRequest</value>
+  </data>
+  <data name="FA_SP_Insert_RetirementRequest" xml:space="preserve">
+    <value>spFAMAddRetirement</value>
+  </data>
+  <data name="FA_SP_Insert_TechnicalEvaluationRequest" xml:space="preserve">
+    <value>spFAMAddTecnicalEvaluationRequest</value>
+  </data>
+  <data name="FA_SP_Insert_TransferRequest" xml:space="preserve">
+    <value>spFAMAddTransferRequest</value>
+  </data>
+  <data name="FA_SP_Insert_WorkOrder" xml:space="preserve">
+    <value>spFAMAddWorkOrder</value>
+  </data>
+  <data name="FA_SP_Select_AvailabilityForecast" xml:space="preserve">
+    <value>spFAMGetAvailabilityForecast</value>
+  </data>
+  <data name="FA_SP_Select_AvailabilityForecastItem" xml:space="preserve">
+    <value>spFAMGetAvailabilityForecastItem</value>
+  </data>
+  <data name="FA_SP_Select_FixedAsset" xml:space="preserve">
+    <value>spFAMGetFixedAssetById</value>
+  </data>
+  <data name="FA_SP_Select_NoveltyRequest" xml:space="preserve">
+    <value>spFAMGetNovelty</value>
+  </data>
+  <data name="FA_SP_Select_PhysicalInventoryTaking" xml:space="preserve">
+    <value>spFAMGetInventoryTaking</value>
+  </data>
+  <data name="FA_SP_Select_PhysicalInventoryTakingItem" xml:space="preserve">
+    <value>spFAMGetInventoryItem</value>
+  </data>
+  <data name="FA_SP_Select_Provider" xml:space="preserve">
+    <value>spFAMGetProvider</value>
+  </data>
+  <data name="FA_SP_Select_PurchaseRequest" xml:space="preserve">
+    <value>spFAMGetPurchaseRequest</value>
+  </data>
+  <data name="FA_SP_Select_Request" xml:space="preserve">
+    <value>spFAMGetRequest</value>
+  </data>
+  <data name="FA_SP_Select_RetirementRequest" xml:space="preserve">
+    <value>spFAMGetRetirement</value>
+  </data>
+  <data name="FA_SP_Select_TechnicalEvaluationRequest" xml:space="preserve">
+    <value>spFAMGetTecnicalEvaluationRequest</value>
+  </data>
+  <data name="FA_SP_Select_TransferRequest" xml:space="preserve">
+    <value>spFAMGetTransferRequest</value>
+  </data>
+  <data name="FA_SP_Select_WorkOrder" xml:space="preserve">
+    <value>spFAMGetWorkOrder</value>
+  </data>
+  <data name="FA_SP_Update_AvailabilityForecast" xml:space="preserve">
+    <value>spFAMUpdateAvailabilityForecast</value>
+  </data>
+  <data name="FA_SP_Update_AvailabilityForecastItem" xml:space="preserve">
+    <value>spFAMUpdateAvailabilityForecastItem</value>
+  </data>
+  <data name="FA_SP_Update_FixedAsset" xml:space="preserve">
+    <value>spFAMUpdateFixedAsset</value>
+  </data>
+  <data name="FA_SP_Update_NoveltyRequest" xml:space="preserve">
+    <value>spFAMUpdateNovelty</value>
+  </data>
+  <data name="FA_SP_Update_PhysicalInventoryTaking" xml:space="preserve">
+    <value>spFAMUpdateInventoryTaking</value>
+  </data>
+  <data name="FA_SP_Update_PhysicalInventoryTakingItem" xml:space="preserve">
+    <value>spFAMUpdateInventoryItem</value>
+  </data>
+  <data name="FA_SP_Update_Provider" xml:space="preserve">
+    <value>spFAMUpdateProvider</value>
+  </data>
+  <data name="FA_SP_Update_PurchaseRequest" xml:space="preserve">
+    <value>spFAMUpdatePurchaseRequest</value>
+  </data>
+  <data name="FA_SP_Update_Request" xml:space="preserve">
+    <value>spFAMUpdateRequest</value>
+  </data>
+  <data name="FA_SP_Update_Retirement" xml:space="preserve">
+    <value>spFAMUpdateRetirement</value>
+  </data>
+  <data name="FA_SP_Update_RetirementRequest" xml:space="preserve">
+    <value>spFAMUpdateRetirement</value>
+  </data>
+  <data name="FA_SP_Update_TechnicalEvaluationRequest" xml:space="preserve">
+    <value>spFAMUpdateTecnicalEvaluationRequest</value>
+  </data>
+  <data name="FA_SP_Update_TransferRequest" xml:space="preserve">
+    <value>spFAMUpdateTransferRequest</value>
+  </data>
+  <data name="FA_SP_Update_WorkOrder" xml:space="preserve">
+    <value>spFAMUpdateWorkOrder</value>
+  </data>
+  <data name="PM_SP_Insert_Activity" xml:space="preserve">
+    <value>spPMAddActivity</value>
+  </data>
+  <data name="PM_SP_Insert_Advice" xml:space="preserve">
+    <value>spPMAddAdvice</value>
+  </data>
+  <data name="PM_SP_Insert_ComponentReplacement" xml:space="preserve">
+    <value>spPMAddComponentReplacement</value>
+  </data>
+  <data name="PM_SP_Insert_Equipment" xml:space="preserve">
+    <value>spPMAddEquipment</value>
+  </data>
+  <data name="PM_SP_Insert_MaintenancePlan" xml:space="preserve">
+    <value>spPMAddMaintenancePlan</value>
+  </data>
+  <data name="PM_SP_Insert_Material" xml:space="preserve">
+    <value>spPMAddMaterial</value>
+  </data>
+  <data name="PM_SP_Insert_Measure" xml:space="preserve">
+    <value>spPMAddMeasure</value>
+  </data>
+  <data name="PM_SP_Insert_MeasurementDocument" xml:space="preserve">
+    <value>spPMAddMeasurementDocument</value>
+  </data>
+  <data name="PM_SP_Insert_Notifications" xml:space="preserve">
+    <value>spPMInsertNotifications</value>
+  </data>
+  <data name="PM_SP_Insert_Task" xml:space="preserve">
+    <value>spPMAddTask</value>
+  </data>
+  <data name="PM_SP_Insert_TechnicalLocation" xml:space="preserve">
+    <value>spPMAddTechnicalLocation</value>
+  </data>
+  <data name="PM_SP_Insert_TechnicalObject" xml:space="preserve">
+    <value>spPMAddTechnicalObject</value>
+  </data>
+  <data name="PM_SP_Insert_WorkOrder" xml:space="preserve">
+    <value>spPMAddWorkOrder</value>
+  </data>
+  <data name="PM_SP_Select_Activity" xml:space="preserve">
+    <value>spPMGetActivity</value>
+  </data>
+  <data name="PM_SP_Select_Advice" xml:space="preserve">
+    <value>spPMGetAdvice</value>
+  </data>
+  <data name="PM_SP_Select_ComponentReplacement" xml:space="preserve">
+    <value>spPMGetComponentReplacement</value>
+  </data>
+  <data name="PM_SP_Select_Equipment" xml:space="preserve">
+    <value>spPMGetEquipment</value>
+  </data>
+  <data name="PM_SP_Select_MaintenancePlan" xml:space="preserve">
+    <value>spPMGetMaintenancePlan</value>
+  </data>
+  <data name="PM_SP_Select_Material" xml:space="preserve">
+    <value>spPMGetMaterial</value>
+  </data>
+  <data name="PM_SP_Select_Measure" xml:space="preserve">
+    <value>spPMGetMeasure</value>
+  </data>
+  <data name="PM_SP_Select_MeasurementDocument" xml:space="preserve">
+    <value>spPMGetMeasurementDocument</value>
+  </data>
+  <data name="PM_SP_Select_Notifications" xml:space="preserve">
+    <value>spPmGetNotifications</value>
+  </data>
+  <data name="PM_SP_Select_Task" xml:space="preserve">
+    <value>spPMGetTask</value>
+  </data>
+  <data name="PM_SP_Select_TechnicalLocation" xml:space="preserve">
+    <value>spPMGetTechnicalLocation</value>
+  </data>
+  <data name="PM_SP_Select_TechnicalObject" xml:space="preserve">
+    <value>spPMGetTechnicalObject</value>
+  </data>
+  <data name="PM_SP_Select_WorkOrder" xml:space="preserve">
+    <value>spPMGetWorkOrder</value>
+  </data>
+  <data name="PM_SP_Update_Activity" xml:space="preserve">
+    <value>spPMUpdateActivity</value>
+  </data>
+  <data name="PM_SP_Update_Advice" xml:space="preserve">
+    <value>spPMUpdateAdvice</value>
+  </data>
+  <data name="PM_SP_Update_ComponentReplacement" xml:space="preserve">
+    <value>spPMUpdateComponentReplacement</value>
+  </data>
+  <data name="PM_SP_Update_Equipment" xml:space="preserve">
+    <value>spPMUpdateEquipment</value>
+  </data>
+  <data name="PM_SP_Update_MaintenancePlan" xml:space="preserve">
+    <value>spPMUpdateMaintenancePlan</value>
+  </data>
+  <data name="PM_SP_Update_Material" xml:space="preserve">
+    <value>spPMUpdateMaterial</value>
+  </data>
+  <data name="PM_SP_Update_Measure" xml:space="preserve">
+    <value>spPMUpdateMeasure</value>
+  </data>
+  <data name="PM_SP_Update_MeasurementDocument" xml:space="preserve">
+    <value>spPMUpdateMeasurmentDocument</value>
+  </data>
+  <data name="PM_SP_Update_Notifications" xml:space="preserve">
+    <value>spPmUpdateNotifications</value>
+  </data>
+  <data name="PM_SP_Update_Task" xml:space="preserve">
+    <value>spPMUpdateTask</value>
+  </data>
+  <data name="PM_SP_Update_TechnicalObject" xml:space="preserve">
+    <value>spPMUpdateTechnicalObject</value>
+  </data>
+  <data name="PM_SP_Update_WorkOrder" xml:space="preserve">
+    <value>spPMUpdateWorkOrder</value>
+  </data>
+  <data name="SCMS_SP_AddParameterForCategory" xml:space="preserve">
+    <value>spSCSMAddParameterForCategory</value>
+  </data>
+  <data name="SCMS_SP_AddUser" xml:space="preserve">
+    <value>spSCMSCreateUser</value>
+  </data>
+  <data name="SCMS_SP_Authorize" xml:space="preserve">
+    <value>spSCMSAuthorize</value>
+  </data>
+  <data name="SCMS_SP_GetMobileAppMenuItems" xml:space="preserve">
+    <value>spSCMSGetMobileAppMenuItems</value>
+  </data>
+  <data name="SCMS_SP_GetToken" xml:space="preserve">
+    <value>spSCMSGetToken</value>
+  </data>
+  <data name="SCMS_SP_UpdateParameterForCategory" xml:space="preserve">
+    <value>spSCMSUpdateParameterForCategory</value>
+  </data>
+  <data name="SRA_SP_EmployeeIdForPermitsAndAbsences" xml:space="preserve">
+    <value>spSRAGetEmployeeIdForPermitsAndAbsences</value>
+  </data>
+  <data name="SRA_SP_GetEmployeeActivitiesForApproval" xml:space="preserve">
+    <value>spSRAGetEmployeeActivitiesForApproval</value>
+  </data>
+  <data name="SRA_SP_GetEmployeeActivitiesInPeriod" xml:space="preserve">
+    <value>spSRAGetEmployeeActivitiesInPeriod</value>
+  </data>
+  <data name="SRA_SP_GetEmployeeById" xml:space="preserve">
+    <value>spSRAGetEmployeeById</value>
+  </data>
+  <data name="SRA_SP_GetEmployeeForToken" xml:space="preserve">
+    <value>spSRAGetEmployeeByToken</value>
+  </data>
+  <data name="SRA_SP_GetParametersByCategory" xml:space="preserve">
+    <value>spSCMSGetParametersByCategory</value>
+  </data>
+  <data name="SRA_SP_InsertEmployeeActivity" xml:space="preserve">
+    <value>spSRAInsertEmployeeActivity</value>
+  </data>
+  <data name="SRA_SP_Insert_PermitsAndAbsences" xml:space="preserve">
+    <value>spSRAInsertPermitsAndAbsences</value>
+  </data>
+  <data name="SRA_SP_Update_PermitsAndAbsences" xml:space="preserve">
+    <value>spSRAUpdatePermitsAndAbsences</value>
+  </data>
+</root>

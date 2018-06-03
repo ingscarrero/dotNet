@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">10.0</VisualStudioVersion>
+    <PermissionSet>UNSAFE</PermissionSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>SOFTTEK.SCMS.DB</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{8ce5b14a-f91d-46f9-bb0a-a0a67cf78870}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>SOFTTEK.SCMS.DB</RootNamespace>
+    <AssemblyName>SOFTTEK.SCMS.DB</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <GenerateCreateScript>True</GenerateCreateScript>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>0</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <!-- VS10 without SP1 will not have VisualStudioVersion set, so do that here -->
+  <PropertyGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Tables" />
+    <Folder Include="Procedures" />
+    <Folder Include="Functions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\TBL_SCMS_MOBILE_MENU.sql" />
+    <Build Include="Procedures\spSCMSGetMobileAppMenuItems.sql" />
+    <Build Include="Tables\TBL_SCMS_USER.sql" />
+    <Build Include="Tables\TBL_SCMS_TOKEN.sql" />
+    <Build Include="Procedures\spSCMSAuthorize.sql" />
+    <Build Include="Procedures\spSCMSCreateUser.sql" />
+    <Build Include="Procedures\spSCMSGetToken.sql" />
+    <Build Include="Tables\TBL_SCMS_PARAM_CATEGORY.sql" />
+    <Build Include="Tables\TBL_SCMS_PARAM.sql" />
+    <Build Include="Tables\TBL_SCMS_PARAM_TYPE.sql" />
+    <Build Include="Procedures\spSCMSGetParametersByCategory.sql" />
+    <Build Include="Procedures\spSCMSAddParameterCategory.sql" />
+    <Build Include="Procedures\spSCSMAddParameterForCategory.sql" />
+    <Build Include="Procedures\spSCMSUpdateParameterForCategory.sql" />
+    <Build Include="Tables\TBL_SCMS_VIEW.sql" />
+    <Build Include="Tables\TBL_SCMS_APP.sql" />
+    <Build Include="Tables\TBL_SCMS_ROLE.sql" />
+    <Build Include="Tables\TBL_SCMS_VIEWS_BY_PROFILE.sql" />
+    <Build Include="Tables\TBL_SCMS_PROFILES_BY_ROLE.sql" />
+    <Build Include="Tables\TBL_SCMS_USERS_BY_ROLE.sql" />
+    <Build Include="Tables\TBL_SCMS_PROFILE.sql" />
+    <Build Include="Tables\TBL_SRA_EMPLOYEE.sql" />
+    <Build Include="Tables\TBL_SRA_CONTACT.sql" />
+    <Build Include="Tables\TBL_SRA_PERSON.sql" />
+    <Build Include="Procedures\spSRAGetEmployeeByToken.sql" />
+    <Build Include="Functions\fnCheckGender.sql" />
+    <Build Include="Procedures\spSRAGetEmployeeById.sql" />
+    <Build Include="Tables\TBL_FAM_INVENTORY.sql" />
+    <Build Include="Tables\TBL_FAM_NOVELTY.sql" />
+    <Build Include="Tables\TBL_SRA_ACTIVITY.sql" />
+    <Build Include="Procedures\spSRAGetEmployeeActivitiesInPeriod.sql" />
+    <Build Include="Functions\fnSRACheckActivityCode.sql" />
+    <Build Include="Procedures\spSRAInsertEmployeeActivity.sql" />
+    <Build Include="Procedures\spSRAUpdateEmployeeActivity.sql" />
+    <Build Include="Functions\fnSRACheckActivityJornadeType.sql" />
+    <Build Include="Procedures\spSRAGetEmployeeActivitiesForApproval.sql" />
+    <Build Include="Tables\TBL_SRA_PERMITS_AND_ABSENCES.sql" />
+    <Build Include="Functions\fnSRACheckPermitsAndAbsencesCode.sql" />
+    <Build Include="Procedures\spSRAInsertPermitsAndAbsences.sql" />
+    <Build Include="Procedures\spSRAUpdatePermitsAndAbsences.sql" />
+    <Build Include="Procedures\spSRAGetEmployeeIdForPermitsAndAbsences.sql" />
+    <Build Include="Tables\TBL_PM_MAINTENANCE_PLAN.sql" />
+    <Build Include="Tables\TBL_PM_MATERIAL.sql" />
+    <Build Include="Tables\TBL_PM_TASK.sql" />
+    <Build Include="Tables\TBL_PM_WORK_ORDER.sql" />
+    <Build Include="Tables\TBL_SCMS_LOG.sql" />
+    <Build Include="Procedures\spPMAddMaintenancePlan.sql" />
+    <Build Include="Procedures\spPMAddMaterial.sql" />
+    <Build Include="Procedures\spPMGetMaintenancePlan.sql" />
+    <Build Include="Procedures\spPMGetMaterial.sql" />
+    <Build Include="Procedures\spPMGetTask.sql" />
+    <Build Include="Procedures\spPMUpdateMaintenancePlan.sql" />
+    <Build Include="Procedures\spPMGetWorkOrder.sql" />
+    <Build Include="Procedures\spPMAddWorkOrder.sql" />
+    <Build Include="Procedures\spPMUpdateWorkOrder.sql" />
+    <Build Include="Procedures\spPMAddTask.sql" />
+    <Build Include="Procedures\spPMUpdateTask.sql" />
+    <Build Include="Tables\TBL_FAM_FIXEDASSET.sql" />
+    <Build Include="Tables\TBL_FAM_REQUEST.sql" />
+    <Build Include="Tables\TBL_FAM_PROVIDER.sql" />
+    <Build Include="Tables\TBL_FAM_RETIREMENT.sql" />
+    <Build Include="Tables\TBL_FAM_INVENTORY_ITEM.sql" />
+    <Build Include="Procedures\spFAMGetFixedAssetById.sql" />
+    <Build Include="Procedures\spFAMGetProvider.sql" />
+    <Build Include="Procedures\spFAMGetNovelty.sql" />
+    <Build Include="Procedures\spFAMGetRequest.sql" />
+    <Build Include="Procedures\spFAMGetRetirement.sql" />
+    <Build Include="Procedures\spFAMGetInventory.sql" />
+    <Build Include="Procedures\spFAMGetInventoryItem.sql" />
+    <Build Include="Procedures\spFAMAddFixedAsset.sql" />
+    <Build Include="Procedures\spFAMAddInventory.sql" />
+    <Build Include="Procedures\spFAMAddInventoryItem.sql" />
+    <Build Include="Procedures\spFAMAddNovelty.sql" />
+    <Build Include="Procedures\spFAMAddProvider.sql" />
+    <Build Include="Procedures\spFAMAddRequest.sql" />
+    <Build Include="Procedures\spFAMAddRetirement.sql" />
+    <Build Include="Procedures\spFAMUpdateFixedAsset.sql" />
+    <Build Include="Procedures\spFAMUpdateInventory.sql" />
+    <Build Include="Procedures\spFAMUpdateInventoryItem.sql" />
+    <Build Include="Tables\TBL_FAM_INVENTORY_TAKING.sql" />
+    <Build Include="Procedures\spFAMAddInventoryTaking.sql" />
+    <Build Include="Procedures\spFAMGetInventoryTaking.sql" />
+    <Build Include="Procedures\spFAMUpdateInventoryTaking.sql" />
+    <Build Include="Procedures\spFAMUpdateNovelty.sql" />
+    <Build Include="Procedures\spFAMUpdateProvider.sql" />
+    <Build Include="Procedures\spFAMUpdateRequest.sql" />
+    <Build Include="Procedures\spFAMUpdateRetirement.sql" />
+    <Build Include="Functions\fnCheckValueForParamField.sql" />
+    <Build Include="Functions\fnIdForParamFieldValue.sql" />
+    <Build Include="Tables\TBL_FAM_WORK_ORDER.sql" />
+    <Build Include="Procedures\spFAMAddWorkOrder.sql" />
+    <Build Include="Procedures\spFAMGetWorkOrder.sql" />
+    <Build Include="Procedures\spFAMUpdateWorkOrder.sql" />
+    <Build Include="Tables\TBL_FAM_AVAILABILITY_FORECAST.sql" />
+    <Build Include="Procedures\spFAMAddAvailabilityForecast.sql" />
+    <Build Include="Procedures\spFAMGetAvailabilityForecast.sql" />
+    <Build Include="Procedures\spFAMUpdateAvailabilityForecast.sql" />
+    <Build Include="Tables\TBL_FAM_TRANSFER_REQUEST.sql" />
+    <Build Include="Procedures\spFAMAddTransferRequest.sql" />
+    <Build Include="Procedures\spFAMGetTransferRequest.sql" />
+    <Build Include="Procedures\spFAMUpdateTransferRequest.sql" />
+    <Build Include="Tables\TBL_FAM_TECNICAL_EVALUATION_REQUEST.sql" />
+    <Build Include="Procedures\spFAMAddTecnicalEvaluationRequest.sql" />
+    <Build Include="Procedures\spFAMGetTecnicalEvaluationRequest.sql" />
+    <Build Include="Procedures\spFAMUpdateTecnicalEvaluationRequest.sql" />
+    <Build Include="Tables\TBL_FAM_PURCHASE_REQUEST.sql" />
+    <Build Include="Procedures\spFAMAddPurchaseRequest.sql" />
+    <Build Include="Procedures\spFAMGetPurchaseRequest.sql" />
+    <Build Include="Procedures\spFAMUpdatePurchaseRequest.sql" />
+    <Build Include="Tables\TBL_FAM_AVAILABILITY_FORECAST_ITEM.sql" />
+    <Build Include="Procedures\spFAMAddAvailabilityForecastItem.sql" />
+    <Build Include="Procedures\spFAMGetAvailabilityForecastItem.sql" />
+    <Build Include="Procedures\spFAMUpdateAvailabilityForecastItem.sql" />
+    <Build Include="Tables\TBL_PM_COMPONENT_REPLACEMENT.sql" />
+    <Build Include="Procedures\spPMAddComponentReplacement.sql" />
+    <Build Include="Procedures\spPMGetComponentReplacement.sql" />
+    <Build Include="Procedures\spPMUpdateComponentReplacement.sql" />
+    <Build Include="Tables\TBL_PM_MEASUREMENT_DOCUMENT.sql" />
+    <Build Include="Procedures\spPMAddMeasurementDocument.sql" />
+    <Build Include="Procedures\spPMGetMeasurementDocument.sql" />
+    <Build Include="Procedures\spPMUpdateMeasurmentDocument.sql" />
+    <Build Include="Tables\TBL_PM_MEASURE.sql" />
+    <Build Include="Procedures\spPMAddMeasure.sql" />
+    <Build Include="Procedures\spPMGetMeasure.sql" />
+    <Build Include="Procedures\spPMUpdateMeasure.sql" />
+    <Build Include="Tables\TBL_PM_ADVICE.sql" />
+    <Build Include="Procedures\spPMAddAdvice.sql" />
+    <Build Include="Procedures\spPMGetAdvice.sql" />
+    <Build Include="Procedures\spPMUpdateAdvice.sql" />
+    <Build Include="Procedures\spPMUpdateMaterial.sql" />
+    <Build Include="Tables\TBL_PM_TECHNICALOBJECT.sql" />
+    <Build Include="Procedures\spPMAddTechnicalObject.sql" />
+    <Build Include="Procedures\spPMGetTechnicalObject.sql" />
+    <Build Include="Procedures\spPMUpdateTechnicalObject.sql" />
+    <Build Include="Tables\TBL_PM_ACTIVITY.sql" />
+    <Build Include="Procedures\spPMGetActivity.sql" />
+    <Build Include="Procedures\spPMUpdateActivity.sql" />
+    <Build Include="Procedures\spPMAddActivity.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="SOFTTEK.SCMS.DB.refactorlog" />
+  </ItemGroup>
+</Project>

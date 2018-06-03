@@ -1,0 +1,487 @@
+﻿/*Styles for divices that width between 300px and  800px*/
+@media screen and (min-width:1px) and (max-width:800px) {
+    .ui.vertical.divider {
+        color: #696969;
+    }
+
+    .ui.vertical.divider {
+        margin: 0 4px;
+    }
+
+    .ui.raised.segment {
+        background-color: #fffacd;
+        width: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
+        height: 80%;
+        max-height: 80%;
+        min-height: 80%;
+    }
+
+    .footer {
+        text-align: right;
+    }
+
+    .text {
+        display: inline;
+    }
+
+    .menuFlotante {
+        height: auto;
+        background-color: black;
+        color: white !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1 !important;
+        width: 100%;
+        padding: 5% 5% 5% 5%;
+    }
+
+    .divContent {
+        position: relative !important;
+        z-index: 0 !important;
+    }
+
+    .divBody {
+        background-image: url(../Images/login_phones.png) !important;
+        background-repeat: no-repeat !important;
+        background-size: cover;
+        background-color: black !important;
+        background-position: center;
+        top: 50%;
+        height: 110%;
+        width: 100%;
+        min-height: 110%;
+        max-height: 110%;
+    }
+
+    #user {
+        position: relative;
+        display: block;
+        height: 20%;
+        width: 100%;
+    }
+
+    .divLogin {
+        top: 10% !important;
+    }
+
+    .min_size {
+        width: 50% !important;
+        max-width: 50% !important;
+        min-width: 50% !important;
+    }
+
+    .space_Content {
+        margin-top: 0% !important;
+    }
+
+    #circle_1 {
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        background-color: indianred;
+        border: 2px solid gray;
+        background-position: center;
+        display: block !important;
+        position: absolute;
+        left: 35%;
+        right: 35%;
+        height: 110%;
+        width: 22%;
+        top: 0%;
+    }
+
+    #circle_2 {
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        background-color: white;
+        border: 2px solid grey;
+        background-position: center;
+        display: block !important;
+        position: absolute;
+        left: 35%;
+        right: 35%;
+        height: 100%;
+        width: 20%;
+        top: 34%;
+        margin-left: 8%;
+    }
+}
+
+/*Styles for divices that width between 801px and  1300px*/
+@media screen and (min-width:801px) and (max-width:1300px) {
+    .ui.vertical.divider {
+        color: #696969;
+    }
+
+    .ui.vertical.divider {
+        margin: 0 4px;
+    }
+
+    .ui.raised.segment {
+        background-color: #fffacd;
+        width: 60%;
+        margin-left: 20%;
+        margin-right: 20%;
+        height: 80%;
+        max-height: 80%;
+        min-height: 80%;
+    }
+
+    .footer {
+        text-align: right;
+    }
+
+    .text {
+        display: inline;
+    }
+
+    .menuFlotante {
+        height: auto;
+        background-color: black;
+        color: white !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1 !important;
+        width: 50%;
+        padding: 4% 4% 4% 4%;
+    }
+
+    .divContent {
+        position: relative !important;
+        z-index: 0 !important;
+    }
+
+    .divBody {
+        background-image: url(../Images/aboutus.jpg) !important;
+        background-repeat: no-repeat !important;
+        background-size: contain;
+        background-color: black !important;
+        background-position: center;
+        top: 50%;
+        height: 110%;
+        width: 100%;
+        min-height: 110%;
+        max-height: 110%;
+    }
+
+    #user {
+        position: relative;
+        display: block;
+        height: 20%;
+        width: 100%;
+    }
+
+    .divLogin {
+        top: 10% !important;
+    }
+
+    .space_Content {
+        margin-top: 2% !important;
+    }
+
+    #circle_1 {
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        background-color: indianred;
+        border: 2px solid gray;
+        background-position: center;
+        display: block !important;
+        position: absolute;
+        left: 40%;
+        right: 40%;
+        height: 110%;
+        width: 22%;
+        top: 0%;
+    }
+
+    #circle_2 {
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        background-color: white;
+        border: 2px solid grey;
+        background-position: center;
+        display: block !important;
+        position: absolute;
+        left: 40%;
+        right: 40%;
+        height: 100%;
+        width: 20%;
+        top: 30%;
+        margin-left: 5%;
+    }
+}
+
+/*Styles for divices that width more 1301px*/
+@media screen and (min-width:1301px) {
+    .ui.vertical.divider {
+        color: #696969;
+    }
+
+    .ui.vertical.divider {
+        margin: 0 4px;
+    }
+
+    .ui.raised.segment {
+        background-color: #fffacd;
+        width: 40%;
+        margin-left: 30%;
+        margin-right: 30%;
+        height: 80%;
+        max-height: 80%;
+        min-height: 80%;
+    }
+
+    .footer {
+        text-align: right;
+    }
+
+    .text {
+        display: inline;
+    }
+
+    .menuFlotante {
+        height: auto;
+        background-color: black;
+        color: white !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1 !important;
+        width: 25%;
+        padding: 3% 3% 3% 3%;
+    }
+
+    .divContent {
+        position: relative !important;
+        z-index: 0 !important;
+    }
+
+    .divBody {
+        background-image: url(../Images/aboutus_hd.jpg) !important;
+        background-repeat: no-repeat !important;
+        background-size: contain;
+        background-color: black !important;
+        background-position: center;
+        top: 50%;
+        height: 110%;
+        width: 100%;
+        min-height: 110%;
+        max-height: 110%;
+    }
+
+    #user {
+        position: relative;
+        display: block;
+        height: 20%;
+        width: 100%;
+    }
+
+    .divLogin {
+        top: 10% !important;
+    }
+
+    .space_Content {
+        margin-top: 4% !important;
+    }
+
+    #circle_1 {
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        background-color: indianred;
+        border: 2px solid gray;
+        background-position: center;
+        display: block !important;
+        position: absolute;
+        left: 40%;
+        right: 40%;
+        height: 110%;
+        width: 22%;
+        top: 0%;
+    }
+
+    #circle_2 {
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        background-color: white;
+        border: 2px solid grey;
+        background-position: center;
+        display: block !important;
+        position: absolute;
+        left: 40%;
+        right: 40%;
+        height: 100%;
+        width: 20%;
+        top: 30%;
+        margin-left: 5%;
+    }
+}
+
+
+/*Other styles, Globals*/
+.contentAccordion {
+    height: auto !important;
+}
+
+element.style {
+    height: auto !important;
+}
+
+.imageCenter {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.btnMenu {
+    margin-left: -2% !important;
+}
+
+.rotateMe {
+    -webkit-transition: -webkit-transform 1s ease-out;
+    -moz-transition: -moz-transform 1s ease-out;
+    transition: transform 1s ease-out;
+}
+
+    .rotateMe:hover {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+
+.fondoTransparente {
+    background-color: transparent !important;
+}
+
+
+.backBlue {
+    background-color: #9fd5d1 !important;
+}
+
+.vertical-centered-text {
+    display: flex;
+    /* alineacion vertical */
+    align-items: center;
+    /* alineacion horizontal */
+    justify-content: center;
+    text-align: right;
+    font-weight: bold;
+}
+
+.vertical-centered-text_left {
+    display: flex;
+    /* alineacion vertical */
+    align-items: center;
+    /* alineacion horizontal */
+    text-align: left !important;
+    font-weight: bold;
+}
+
+.vertical-centered-text_rigth {
+    display: flex;
+    /* alineacion vertical */
+    align-items: center;
+    /* alineacion horizontal */
+    text-align: right !important;
+    font-weight: bold;
+}
+
+.menuResponsive {
+    height: 100%;
+    width: 100%;
+    margin-top:-10%;
+    overflow-x: hidden !important;
+    overflow-y:hidden!important;
+}
+
+.menuHead {
+    /*background-position: top !important;
+    background-color: transparent;
+    z-index:3 !important;
+     position: relative !important;
+     top:0 !important;*/
+    position:absolute !important; 
+    z-index:1 !important;
+    margin-top:7% !important;
+}
+
+.imgHead {
+    width: 100% !important;
+    background-color:transparent !important;
+}
+
+.contentMenu{
+    width:100% !important;
+    height:100% !important;
+    overflow-y:scroll !important;
+    overflow-x: hidden !important;
+    background-color: transparent !important;
+    z-index:0 !important;
+    top:0!important;
+    position:absolute; 
+}
+
+.menuFoot {
+    background-position: bottom;
+    background-color: transparent;
+    bottom:0 !important;
+
+    position:absolute !important; 
+    z-index:1 !important;
+    /*margin-top:7% !important;*/
+}
+
+.imgTranspartent{
+    background-color:transparent !important;
+    -webkit-transform: rotate(-25deg);
+        -moz-transform: rotate(-25deg);
+        transform: rotate(-25deg);
+}
+
+.imgTranspartentMore{
+    background-color:transparent !important;
+    -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        transform: rotate(0deg);
+}
+
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    overflow-x: auto;
+}
+
+.clearfix {
+    display: inline-block;
+    overflow-x: auto;
+}
+
+/* Hides from IE-mac \*/
+* html .clearfix {
+    height: 1%;
+}
+
+.clearfix {
+    display: block;
+}
+/* End hide from IE-mac */
+
+.resImage {
+  display: block;
+  width: 130% !important;
+  height: 150px !important;
+  margin-left:-15%;
+  margin-bottom:10%;
+}

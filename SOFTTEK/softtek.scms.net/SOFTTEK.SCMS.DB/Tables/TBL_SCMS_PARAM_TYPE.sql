@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[TBL_SCMS_PARAM_TYPE]
+(
+	[id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [name] NVARCHAR(50) NOT NULL, 
+    [description] NVARCHAR(MAX) NULL
+)

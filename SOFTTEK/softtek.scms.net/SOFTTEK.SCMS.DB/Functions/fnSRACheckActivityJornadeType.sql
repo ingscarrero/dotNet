@@ -1,0 +1,17 @@
+﻿CREATE FUNCTION [dbo].[fnSRACheckActivityJornadeType]
+(
+	@jornade_type nvarchar(10)
+)
+RETURNS BIT
+AS
+
+BEGIN
+
+	IF EXISTS(SELECT [TBL_SCMS_PARAM].value
+				FROM [TBL_SCMS_PARAM] 
+					INNER JOIN [TBL_SCMS_PARAM_CATEGORY] ON [TBL_SCMS_PARAM_CATEGORY].id = [TBL_SCMS_PARAM].category 
+						AND [TBL_SCMS_PARAM_CATEGORY].name = 'SRA_JORNADE_TYPE'
+				WHERE [TBL_SCMS_PARAM].value = @jornade_type)
+		RETURN 1
+	RETURN 0 
+END

@@ -1,0 +1,789 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Configuration" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.Data.Linq" #>
+<#@ assembly name="$(SolutionDir)\SOFTTEK.SF.DataModel\bin\Debug\SOFTTEK.SF.DataModel.dll" #>
+<#@ assembly name="$(SolutionDir)\Frameworks\SOFTTEK.SCMS.Foundation.dll" #>
+<#@ assembly name="$(SolutionDir)\SOFTTEK.SCMS.Entity\bin\Debug\SOFTTEK.SCMS.Entity.dll" #>
+<#@ assembly name="EnvDTE" #> 
+<#@ import namespace="EnvDTE" #> 
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Data.Linq" #>
+<#@ import namespace="System.Configuration" #>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="SOFTTEK.SF.DataModel" #>
+<#@ import namespace="SOFTTEK.SCMS.Foundation.Security" #>
+<#@ import namespace="SOFTTEK.SCMS.Foundation.Data" #>
+<#@ import namespace="SOFTTEK.SCMS.Entity" #>
+<#@ output extension=".cs" #>
+<#
+// T4 Generation Variables
+string classPrefix="PM";
+string targetNamespace="SOFTTEK.SCMS.Entity.PM";
+
+// DTE Environment
+var serviceProvider = this.Host as IServiceProvider;
+var dte = serviceProvider.GetService(typeof(DTE)) as DTE;
+
+/// On Demand Assembly Loading
+string solutionPath = dte.Solution.FullName.Substring(0,dte.Solution.FullName.LastIndexOf(@"\")+1);
+string targetAssemblyPath = string.Concat(solutionPath, @"SOFTTEK.SCMS.Entity\bin\Debug\SOFTTEK.SCMS.Entity.dll");
+string dataModelAssemblyPath = string.Concat(solutionPath, @"SOFTTEK.SF.DataModel\bin\Debug\SOFTTEK.SF.DataModel.dll");
+Assembly a = Assembly.ReflectionOnlyLoadFrom(targetAssemblyPath);
+Assembly b = Assembly.ReflectionOnlyLoadFrom(dataModelAssemblyPath);
+#>
+using System;
+using System.Data;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using SOFTTEK.SCMS.Foundation.Security;
+using SOFTTEK.SCMS.Foundation.Data;
+using SOFTTEK.SCMS.Entity;
+
+namespace SOFTTEK.SCMS.Data {
+	public class <#=classPrefix#>DataContext: DataContext, IDisposable{
+		#region Fields
+		/// <summary>
+		/// Get or Set the instance of the Data Context Data Provider
+        /// </summary>
+		private SOFTTEK.SCMS.Foundation.Data.DataProvider dataProvider;
+		#endregion
+
+		#region Propierties
+		/// <summary>
+		/// Get or Set the string that represents the connection parameters for the Data Context Instance
+        /// </summary>
+		public string ConnectionString { get; set; }
+		
+		/// <summary>
+		/// Get or Set the Provider Identifier of the Data Provider to instance at the initialization of the Data Context
+        /// </summary>
+		public string ProviderName { get; private set; }
+
+		/// <summary>
+        /// Get or Set The Default DB user for the Data Provider
+        /// </summary>
+        public string DefaultUser { private get; set; }
+		#endregion
+
+        #region Configuration
+		/// <summary>
+		/// Default Constructor for the instance of the Data Context
+		/// <param name="securityContext">Security Context instance to be used by the Data Context instance</param>
+        /// </summary>
+		public <#=classPrefix#>DataContext(SecurityContext securityContext)
+           : base(securityContext)
+        {
+
+        }
+
+		/// <summary>
+		/// Perform the initialization routine for the Data Context Instance, creating an instance for the Data Provider.
+        /// </summary>
+		public void Initialize()
+        {
+            if (string.IsNullOrEmpty(ConnectionString))
+            {
+                throw new Exception("ConnectionString is required.", new ArgumentException("ConnectionString cannot be null."));
+            }
+            ProviderName = System.Configuration.ConfigurationManager.ConnectionStrings[ConnectionString].ProviderName;
+            switch (ProviderName)
+            {
+                case "System.Data.SqlClient":
+                    dataProvider = new SOFTTEK.SCMS.Foundation.Data.DataProviders.MSSQLDataProvider();
+                    dataProvider.ConnectionString = ConnectionString;
+					dataProvider.Context = this;
+                    break;
+                case "System.Data.OracleClient":
+                    break;
+                default:
+                    break;
+            }
+        }
+		/// <summary>
+		/// Release the instance´s resources
+		/// </summary>
+        public void Dispose()
+        {
+            dataProvider.Dispose();
+            Dispose(false);
+        }
+
+		/// <summary>
+		/// Implementation of the Dispose Pattern for the disposable instance of the Data Context by releasing all its disposable resources.
+        /// <param name="disposing">Flag that indicates the current disposing status for the Data Context instance</param>
+		/// </summary>
+		protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Dispose();
+            }
+            dataProvider = null;
+        }
+        #endregion
+
+		#region Accessors
+
+<#foreach(var entity in a.GetTypes()) {#>
+<#if(targetNamespace.Equals(entity.Namespace)){#>
+		#region <#=entity.Name#>
+		
+		/// <summary>
+        /// Retrieves a list of <#=entity.Name#> instances that matches a given filter criteria by the <#=entity.Name#> object instance 
+        /// </summary>
+        /// <param name="filter">Object with the information required to filter the set of results</param>
+        /// <returns>List of <#=entity.Name#> instances that matches the filter.</returns>
+		public List<<#=entity.Namespace#>.<#=entity.Name#>> Get<#=entity.Name#>s(<#=entity.Namespace#>.<#=entity.Name#> filter)
+		{
+			Func<<#=entity.Namespace#>.<#=entity.Name#>, List<System.Data.IDataParameter>> filterDelegate = (f) =>
+            {
+                List<System.Data.IDataParameter> parameters = new List<System.Data.IDataParameter>();
+				//Token
+				System.Data.IDataParameter p_tok = dataProvider.GetParameter("@token_id", SecurityContext.AuthorizationTicket);
+                p_tok.Direction = System.Data.ParameterDirection.Input;
+                p_tok.DbType = System.Data.DbType.String;
+                parameters.Add(p_tok);
+<#foreach(var member in entity.GetProperties().Where(p=>IsFilter(p))){
+	string fieldName;#>
+				//<#=member.Name#>
+<#if(member.PropertyType.IsPrimitive || "DateTime".Equals(member.PropertyType.Name) || "String".Equals(member.PropertyType.Name)){
+	fieldName = string.Concat(GetFieldPrefixForEntityName(entity.Name), "_", GetFieldTextForName(member.Name));#>
+				System.Data.IDataParameter p_filter_<#=fieldName#> = dataProvider.GetParameter("@filter_<#=fieldName#>", 
+					f.<#=member.Name#> == default(<#=member.PropertyType#>) ? 
+						(object)System.DBNull.Value : 
+						(object)f.<#=member.Name#>);
+				p_filter_<#=fieldName#>.Direction = System.Data.ParameterDirection.Input;
+				p_filter_<#=fieldName#>.DbType = DbType.<#=DBTypeForSystemType(member.PropertyType)#>;
+				parameters.Add(p_filter_<#=fieldName#>);
+<#} else if(!member.PropertyType.Name.StartsWith("List")) {
+	fieldName = string.Concat(GetFieldPrefixForEntityName(entity.Name), "_", GetFieldTextForName(member.Name), "_Fk");#>
+				System.Data.IDataParameter p_filter_<#=fieldName#> = dataProvider.GetParameter("@filter_<#=fieldName#>", 
+					f.<#=member.Name#> == default(<#=IsGenericProperty(member) ? 
+						string.Concat(member.PropertyType.Namespace, ".", GetGenericPropertyTypeName(member)) : 
+						string.Concat(member.PropertyType.Namespace, ".", member.PropertyType.Name)#>) ? 
+						(object)System.DBNull.Value : 
+						(object)f.<#=member.Name#>.Identifier);
+				p_filter_<#=fieldName#>.Direction = System.Data.ParameterDirection.Input;
+				p_filter_<#=fieldName#>.DbType = DbType.<#=DBTypeForSystemType(member.PropertyType.GetProperties().FirstOrDefault(p=>p.Name=="Identifier").PropertyType)#>;
+				parameters.Add(p_filter_<#=fieldName#>);
+<#}#>
+<#}#>
+                return parameters;
+            };
+
+            Func<System.Data.IDataReader, <#=entity.Namespace#>.<#=entity.Name#>> mapper = (reader) =>
+            {
+<#
+bool requiresLongHelper = false;
+bool requiresIntHelper = false;
+bool requiresDoubleHelper = false;
+bool requiresFloatHelper = false;
+bool requiresDateHelper = false;
+bool requiresDecimalHelper = false;
+foreach(var member in entity.GetProperties().Where(p=>IsOutput(p))){
+	if(member.PropertyType.Equals(typeof(long))){
+		requiresLongHelper = true;
+	} else if(member.PropertyType.Equals(typeof(int))){
+		requiresIntHelper = true;
+	} else if(member.PropertyType.Equals(typeof(double))){
+		requiresDoubleHelper = true;
+	} else if(member.PropertyType.Equals(typeof(float))){
+		requiresFloatHelper = true;
+	} else if(member.PropertyType.Equals(typeof(DateTime))){
+		requiresDateHelper = true;
+	} else if(member.PropertyType.Equals(typeof(decimal))){
+		requiresDecimalHelper = true;
+	} else {
+		var fkProperty = member.PropertyType.GetProperties().Where(p=>"Identifier".Equals(p.Name)).FirstOrDefault();
+		if(fkProperty!=null) {
+			if(fkProperty.PropertyType.Equals(typeof(long))){
+				requiresLongHelper = true;
+			} else if(fkProperty.PropertyType.Equals(typeof(int))){
+				requiresIntHelper = true;
+			} else if(fkProperty.PropertyType.Equals(typeof(double))){
+				requiresDoubleHelper = true;
+			} else if(fkProperty.PropertyType.Equals(typeof(float))){
+				requiresFloatHelper = true;
+			} else if(fkProperty.PropertyType.Equals(typeof(DateTime))){
+				requiresDateHelper = true;
+			} else if(fkProperty.PropertyType.Equals(typeof(decimal))){
+				requiresDecimalHelper = true;
+			}
+		}
+	}	
+}#>
+<#if(requiresLongHelper){#>
+				long longHelper = default(long);
+<#}#>
+<#if(requiresIntHelper){#>
+				int intHelper = default(int);
+<#}#>
+<#if(requiresDoubleHelper){#>
+				double doubleHelper = default(double);
+<#}#>
+<#if(requiresFloatHelper){#>
+				float floatHelper = default(float);
+<#}#>
+<#if(requiresDateHelper){#>
+				DateTime dateHelper = default(DateTime);
+<#}#>
+<#if(requiresDecimalHelper){#>
+				decimal decimalHelper = default(decimal);
+<#}#>
+
+				<#=entity.Namespace#>.<#=entity.Name#> value = new <#=entity.Namespace#>.<#=entity.Name#>{
+<#foreach(var member in entity.GetProperties().Where(p=>IsOutput(p))){
+	string fieldName = string.Concat(GetFieldPrefixForEntityName(entity.Name), "_", GetFieldTextForName(member.Name));#>
+<#	if(member.PropertyType.Equals(typeof(long))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(long.TryParse(reader["<#=fieldName#>"].ToString(), out longHelper) ? longHelper : -1) : -1,
+<#	} else if(member.PropertyType.Equals(typeof(int))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(int.TryParse(reader["<#=fieldName#>"].ToString(), out intHelper) ? intHelper : -1) : -1,
+<#	} else if(member.PropertyType.Equals(typeof(double))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(double.TryParse(reader["<#=fieldName#>"].ToString(), out doubleHelper) ? doubleHelper : 0.0) : 0.0,
+<#	} else if(member.PropertyType.Equals(typeof(float))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(float.TryParse(reader["<#=fieldName#>"].ToString(), out floatHelper) ? floatHelper : 0.0) : 0.0,
+<#	} else if(member.PropertyType.Equals(typeof(DateTime))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(DateTime.TryParse(reader["<#=fieldName#>"].ToString(), out dateHelper) ? dateHelper : default(DateTime)) : default(DateTime),
+<#	} else if(member.PropertyType.Equals(typeof(decimal))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(decimal.TryParse(reader["<#=fieldName#>"].ToString(), out decimalHelper) ? decimalHelper : 0.0) : 0.0,
+<#	} else if(member.PropertyType.Equals(typeof(string))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						reader["<#=fieldName#>"].ToString() : string.Empty,
+<#	} else {
+		if(!member.PropertyType.Name.StartsWith("List")){
+			var fkProperty = member.PropertyType.GetProperties().Where(p=>"Identifier".Equals(p.Name)).FirstOrDefault();
+			if(fkProperty!=null) {
+				if(fkProperty.PropertyType.Equals(typeof(long))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member) : member.PropertyType.Name)#> { Identifier = long.TryParse(reader["<#=fieldName#>_Fk"].ToString(), out longHelper) ? longHelper : -1 } : null, 
+<#				} else if(fkProperty.PropertyType.Equals(typeof(int))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member)  : member.PropertyType.Name)#> { Identifier = int.TryParse(reader["<#=fieldName#>_Fk"].ToString(), out intHelper) ? intHelper : -1 } : null,
+<#				} else if(fkProperty.PropertyType.Equals(typeof(double))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member)  : member.PropertyType.Name)#> { Identifier = double.TryParse(reader["<#=fieldName#>_Fk"].ToString(), out doubleHelper) ? doubleHelper : 0.0 } : null,
+<#				} else if(fkProperty.PropertyType.Equals(typeof(float))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member)  : member.PropertyType.Name)#> { Identifier = float.TryParse(reader["<#=fieldName#>_Fk"].ToString(), out floatHelper) ? floatHelper : 0.0 } : null,
+<#				} else if(fkProperty.PropertyType.Equals(typeof(decimal))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member)  : member.PropertyType.Name)#> { Identifier = decimal.TryParse(reader["<#=fieldName#>_Fk"].ToString(), out decimalHelper) ? decimalHelper : 0.0 } : null,
+<#				} else if(fkProperty.PropertyType.Equals(typeof(string))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member)  : member.PropertyType.Name)#> { Identifier = reader["<#=fieldName#>_Fk"].ToString() },
+<#				}
+			}
+		}
+	}
+}#>
+				};
+                return value;
+            };
+
+            dataProvider.CommandType = System.Data.CommandType.StoredProcedure;
+            List<<#=entity.Namespace#>.<#=entity.Name#>> result = dataProvider.ExecuteReaderWithFilter(SCMS.<#=entity.Namespace.Split('.').ToList().LastOrDefault()#>_SP_Select_<#=entity.Name#>, filterDelegate, filter, mapper);
+            return result;
+		}
+
+		/// <summary>
+        /// Inserts the instance of the provided <#=entity.Name#> at the Data Context datasource  
+        /// </summary>
+        /// <param name="instance">Instance of <#=entity.Name#> with the entity´s information to store</param>
+        /// <returns>Instance of <#=entity.Name#> with the aditional information provided by the Data Context datasource</returns>
+		public <#=entity.Namespace#>.<#=entity.Name#> Insert<#=entity.Name#>(<#=entity.Namespace#>.<#=entity.Name#> instance){
+			Func<<#=entity.Namespace#>.<#=entity.Name#>, List<System.Data.IDataParameter>> input = (i) =>
+            {
+                List<System.Data.IDataParameter> parameters = new List<System.Data.IDataParameter>();
+			
+				//Token
+				System.Data.IDataParameter p_tok = dataProvider.GetParameter("@token_id", SecurityContext.AuthorizationTicket);
+                p_tok.Direction = System.Data.ParameterDirection.Input;
+                p_tok.DbType = System.Data.DbType.String;
+                parameters.Add(p_tok);
+				
+				// Insert
+<#foreach(var member in entity.GetProperties().Where(p=>IsInput(p))){#>
+<#if(member.MemberType == MemberTypes.Property){
+	string fieldName;#>
+				//<#=member.Name#>
+<#if(member.PropertyType.IsPrimitive || "DateTime".Equals(member.PropertyType.Name) || "String".Equals(member.PropertyType.Name)){
+	fieldName = string.Concat(GetFieldPrefixForEntityName(entity.Name), "_", GetFieldTextForName(member.Name));#>
+				System.Data.IDataParameter p_new_<#=fieldName#> = dataProvider.GetParameter("@new_<#=fieldName#>", 
+					i.<#=member.Name#> == default(<#=member.PropertyType#>) ? 
+						(object)System.DBNull.Value : 
+						(object)i.<#=member.Name#>);
+				p_new_<#=fieldName#>.Direction = System.Data.ParameterDirection.Input;
+				p_new_<#=fieldName#>.DbType = DbType.<#=DBTypeForSystemType(member.PropertyType)#>;
+				parameters.Add(p_new_<#=fieldName#>);
+<#} else if(!member.PropertyType.Name.StartsWith("List")) {
+	fieldName = string.Concat(GetFieldPrefixForEntityName(entity.Name), "_", GetFieldTextForName(member.Name), "_Fk");#>
+				System.Data.IDataParameter p_new_<#=fieldName#> = dataProvider.GetParameter("@new_<#=fieldName#>", 
+					i.<#=member.Name#> == default(<#=IsGenericProperty(member) ? 
+						string.Concat(member.PropertyType.Namespace, ".", GetGenericPropertyTypeName(member)) : 
+						string.Concat(member.PropertyType.Namespace, ".", member.PropertyType.Name)#>) ? 
+						(object)System.DBNull.Value : 
+						(object)i.<#=member.Name#>.Identifier);
+				p_new_<#=fieldName#>.Direction = System.Data.ParameterDirection.Input;
+				p_new_<#=fieldName#>.DbType = DbType.<#=DBTypeForSystemType(member.PropertyType.GetProperties().FirstOrDefault(p=>p.Name=="Identifier").PropertyType)#>;
+				parameters.Add(p_new_<#=fieldName#>);
+<#}#>
+<#}#>
+<#}#>
+
+                return parameters;
+            };
+
+			Func<System.Data.IDataReader, <#=entity.Namespace#>.<#=entity.Name#>> mapper = (reader) =>
+            {
+<#
+foreach(var member in entity.GetProperties().Where(p=>IsOutput(p))){
+	if(member.PropertyType.Equals(typeof(long))){
+		requiresLongHelper = true;
+	} else if(member.PropertyType.Equals(typeof(int))){
+		requiresIntHelper = true;
+	} else if(member.PropertyType.Equals(typeof(double))){
+		requiresDoubleHelper = true;
+	} else if(member.PropertyType.Equals(typeof(float))){
+		requiresFloatHelper = true;
+	} else if(member.PropertyType.Equals(typeof(DateTime))){
+		requiresDateHelper = true;
+	} else if(member.PropertyType.Equals(typeof(decimal))){
+		requiresDecimalHelper = true;
+	} else {
+		var fkProperty = member.PropertyType.GetProperties().Where(p=>"Identifier".Equals(p.Name)).FirstOrDefault();
+		if(fkProperty!=null) {
+			if(fkProperty.PropertyType.Equals(typeof(long))){
+				requiresLongHelper = true;
+			} else if(fkProperty.PropertyType.Equals(typeof(int))){
+				requiresIntHelper = true;
+			} else if(fkProperty.PropertyType.Equals(typeof(double))){
+				requiresDoubleHelper = true;
+			} else if(fkProperty.PropertyType.Equals(typeof(float))){
+				requiresFloatHelper = true;
+			} else if(fkProperty.PropertyType.Equals(typeof(DateTime))){
+				requiresDateHelper = true;
+			} else if(fkProperty.PropertyType.Equals(typeof(decimal))){
+				requiresDecimalHelper = true;
+			}
+		}
+	}	
+}#>
+<#if(requiresLongHelper){#>
+				long longHelper = default(long);
+<#}#>
+<#if(requiresIntHelper){#>
+				int intHelper = default(int);
+<#}#>
+<#if(requiresDoubleHelper){#>
+				double doubleHelper = default(double);
+<#}#>
+<#if(requiresFloatHelper){#>
+				float floatHelper = default(float);
+<#}#>
+<#if(requiresDateHelper){#>
+				DateTime dateHelper = default(DateTime);
+<#}#>
+<#if(requiresDecimalHelper){#>
+				decimal decimalHelper = default(decimal);
+<#}#>
+
+				<#=entity.Namespace#>.<#=entity.Name#> value = new <#=entity.Namespace#>.<#=entity.Name#>{
+<#foreach(var member in entity.GetProperties().Where(p=>IsOutput(p))){
+	string fieldName = string.Concat("v_",GetFieldPrefixForEntityName(entity.Name), "_", GetFieldTextForName(member.Name));#>
+<#	if(member.PropertyType.Equals(typeof(long))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(long.TryParse(reader["<#=fieldName#>"].ToString(), out longHelper) ? longHelper : -1) : -1,
+<#	} else if(member.PropertyType.Equals(typeof(int))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(int.TryParse(reader["<#=fieldName#>"].ToString(), out intHelper) ? intHelper : -1) : -1,
+<#	} else if(member.PropertyType.Equals(typeof(double))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(double.TryParse(reader["<#=fieldName#>"].ToString(), out doubleHelper) ? doubleHelper : 0.0) : 0.0,
+<#	} else if(member.PropertyType.Equals(typeof(float))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(float.TryParse(reader["<#=fieldName#>"].ToString(), out floatHelper) ? floatHelper : 0.0) : 0.0,
+<#	} else if(member.PropertyType.Equals(typeof(DateTime))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(DateTime.TryParse(reader["<#=fieldName#>"].ToString(), out dateHelper) ? dateHelper : default(DateTime)) : default(DateTime),
+<#	} else if(member.PropertyType.Equals(typeof(decimal))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(decimal.TryParse(reader["<#=fieldName#>"].ToString(), out decimalHelper) ? decimalHelper : 0.0) : 0.0,
+<#	} else if(member.PropertyType.Equals(typeof(string))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						reader["<#=fieldName#>"].ToString() : string.Empty,
+<#	} else {
+		if(!member.PropertyType.Name.StartsWith("List")){
+			var fkProperty = member.PropertyType.GetProperties().Where(p=>"Identifier".Equals(p.Name)).FirstOrDefault();
+			if(fkProperty!=null) {
+				if(fkProperty.PropertyType.Equals(typeof(long))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member) : member.PropertyType.Name)#> { Identifier = long.TryParse(reader["<#=fieldName#>_Fk"].ToString(), out longHelper) ? longHelper : -1 } : null, 
+<#				} else if(fkProperty.PropertyType.Equals(typeof(int))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member) : member.PropertyType.Name)#> { Identifier = int.TryParse(reader["<#=fieldName#>_Fk"].ToString(), out intHelper) ? intHelper : -1 } : null,
+<#				} else if(fkProperty.PropertyType.Equals(typeof(double))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member) : member.PropertyType.Name)#> { Identifier = double.TryParse(reader["<#=fieldName#>_Fk"].ToString(), out doubleHelper) ? doubleHelper : 0.0 } : null,
+<#				} else if(fkProperty.PropertyType.Equals(typeof(float))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member) : member.PropertyType.Name)#> { Identifier = float.TryParse(reader["<#=fieldName#>_Fk"].ToString(), out floatHelper) ? floatHelper : 0.0 } : null,
+<#				} else if(fkProperty.PropertyType.Equals(typeof(decimal))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member) : member.PropertyType.Name)#> { Identifier = decimal.TryParse(reader["<#=fieldName#>_Fk"].ToString(), out decimalHelper) ? decimalHelper : 0.0 } : null,
+<#				} else if(fkProperty.PropertyType.Equals(typeof(string))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member) : member.PropertyType.Name)#> { Identifier = reader["<#=fieldName#>_Fk"].ToString() },
+<#				}
+			}
+		}
+	}
+}#>
+				};
+                return value;
+            };
+
+
+			dataProvider.CommandType = System.Data.CommandType.StoredProcedure;
+            <#=entity.Namespace#>.<#=entity.Name#> result = dataProvider.ExecuteForEntityWithFilter(SCMS.<#=entity.Namespace.Split('.').ToList().LastOrDefault()#>_SP_Insert_<#=entity.Name#>, input, instance, mapper);
+            return result;
+		}
+
+		/// <summary>
+        /// Update the entity's stored information with that provided by the instance of <#=entity.Name#> at the Data Context datasource  
+        /// </summary>
+        /// <param name="instance">Instance of <#=entity.Name#> with the entity´s information to update</param>
+        /// <param name="filter">Object with the information required to filter the target stored entity´s information</param>
+		/// <returns>Instance of <#=entity.Name#> with the updated information provided by the Data Context datasource</returns>
+		public <#=entity.Namespace#>.<#=entity.Name#> Update<#=entity.Name#>(<#=entity.Namespace#>.<#=entity.Name#> instance, <#=entity.Namespace#>.<#=entity.Name#> filter){
+			Func<<#=entity.Namespace#>.<#=entity.Name#>, List<System.Data.IDataParameter>> filterDelegate = (f) =>
+            {
+                List<System.Data.IDataParameter> parameters = new List<System.Data.IDataParameter>();
+			
+				//Token
+				System.Data.IDataParameter p_tok = dataProvider.GetParameter("@token_id", SecurityContext.AuthorizationTicket);
+                p_tok.Direction = System.Data.ParameterDirection.Input;
+                p_tok.DbType = System.Data.DbType.String;
+                parameters.Add(p_tok);
+				
+				// Filter
+<#foreach(var member in entity.GetProperties().Where(p=>IsFilter(p))){#>
+<#if(member.MemberType == MemberTypes.Property){
+	string fieldName;#>
+				//<#=member.Name#>
+<#if(member.PropertyType.IsPrimitive || "DateTime".Equals(member.PropertyType.Name) || "String".Equals(member.PropertyType.Name)){
+	fieldName = string.Concat(GetFieldPrefixForEntityName(entity.Name), "_", GetFieldTextForName(member.Name));#>
+				System.Data.IDataParameter p_filter_<#=fieldName#> = dataProvider.GetParameter("@filter_<#=fieldName#>", 
+					f.<#=member.Name#> == default(<#=member.PropertyType#>) ? 
+						(object)System.DBNull.Value : 
+						(object)f.<#=member.Name#>);
+				p_filter_<#=fieldName#>.Direction = System.Data.ParameterDirection.Input;
+				p_filter_<#=fieldName#>.DbType = DbType.<#=DBTypeForSystemType(member.PropertyType)#>;
+				parameters.Add(p_filter_<#=fieldName#>);
+<#} else if(!member.PropertyType.Name.StartsWith("List")) {
+	fieldName = string.Concat(GetFieldPrefixForEntityName(entity.Name), "_", GetFieldTextForName(member.Name), "_Fk");#>
+				System.Data.IDataParameter p_filter_<#=fieldName#> = dataProvider.GetParameter("@filter_<#=fieldName#>", 
+					f.<#=member.Name#> == default(<#=IsGenericProperty(member) ? 
+							string.Concat(member.PropertyType.Namespace, ".", GetGenericPropertyTypeName(member)) : 
+							string.Concat(member.PropertyType.Namespace, ".", member.PropertyType.Name)#>) ? 
+						(object)System.DBNull.Value : 
+						(object)f.<#=member.Name#>.Identifier);
+				p_filter_<#=fieldName#>.Direction = System.Data.ParameterDirection.Input;
+				p_filter_<#=fieldName#>.DbType = DbType.<#=DBTypeForSystemType(member.PropertyType.GetProperties().FirstOrDefault(p=>p.Name=="Identifier").PropertyType)#>;
+				parameters.Add(p_filter_<#=fieldName#>);
+<#}#>
+<#}#>
+<#}#>
+				// Update
+<#foreach(var member in entity.GetProperties().Where(p=>IsInput(p))){#>
+<#if(member.MemberType == MemberTypes.Property){
+	string fieldName;#>
+				//<#=member.Name#>
+<#if(member.PropertyType.IsPrimitive || "DateTime".Equals(member.PropertyType.Name) || "String".Equals(member.PropertyType.Name)){
+	fieldName = string.Concat(GetFieldPrefixForEntityName(entity.Name), "_", GetFieldTextForName(member.Name));#>
+				System.Data.IDataParameter p_new_<#=fieldName#> = dataProvider.GetParameter("@new_<#=fieldName#>", 
+					f.<#=member.Name#> == default(<#=member.PropertyType#>) ? 
+						(object)System.DBNull.Value : 
+						(object)instance.<#=member.Name#>);
+				p_new_<#=fieldName#>.Direction = System.Data.ParameterDirection.Input;
+				p_new_<#=fieldName#>.DbType = DbType.<#=DBTypeForSystemType(member.PropertyType)#>;
+				parameters.Add(p_new_<#=fieldName#>);
+<#} else if(!member.PropertyType.Name.StartsWith("List")) {
+	fieldName = string.Concat(GetFieldPrefixForEntityName(entity.Name), "_", GetFieldTextForName(member.Name), "_Fk");#>
+				System.Data.IDataParameter p_new_<#=fieldName#> = dataProvider.GetParameter("@new_<#=fieldName#>", 
+					instance.<#=member.Name#> == default(<#=IsGenericProperty(member) ? 
+						string.Concat(member.PropertyType.Namespace, ".", GetGenericPropertyTypeName(member)) : 
+						string.Concat(member.PropertyType.Namespace, ".", member.PropertyType.Name)#>) ? 
+						(object)System.DBNull.Value : 
+						(object)instance.<#=member.Name#>.Identifier);
+				p_new_<#=fieldName#>.Direction = System.Data.ParameterDirection.Input;
+				p_new_<#=fieldName#>.DbType = DbType.<#=DBTypeForSystemType(member.PropertyType.GetProperties().FirstOrDefault(p=>p.Name=="Identifier").PropertyType)#>;
+				parameters.Add(p_new_<#=fieldName#>);
+<#}#>
+<#}#>
+<#}#>
+
+                return parameters;
+            };
+
+			Func<System.Data.IDataReader, <#=entity.Namespace#>.<#=entity.Name#>> mapper = (reader) =>
+            {
+<#
+foreach(var member in entity.GetProperties().Where(p=>IsOutput(p))){
+	if(member.PropertyType.Equals(typeof(long))){
+		requiresLongHelper = true;
+	} else if(member.PropertyType.Equals(typeof(int))){
+		requiresIntHelper = true;
+	} else if(member.PropertyType.Equals(typeof(double))){
+		requiresDoubleHelper = true;
+	} else if(member.PropertyType.Equals(typeof(float))){
+		requiresFloatHelper = true;
+	} else if(member.PropertyType.Equals(typeof(DateTime))){
+		requiresDateHelper = true;
+	} else if(member.PropertyType.Equals(typeof(decimal))){
+		requiresDecimalHelper = true;
+	} else {
+		var fkProperty = member.PropertyType.GetProperties().Where(p=>"Identifier".Equals(p.Name)).FirstOrDefault();
+		if(fkProperty!=null) {
+			if(fkProperty.PropertyType.Equals(typeof(long))){
+				requiresLongHelper = true;
+			} else if(fkProperty.PropertyType.Equals(typeof(int))){
+				requiresIntHelper = true;
+			} else if(fkProperty.PropertyType.Equals(typeof(double))){
+				requiresDoubleHelper = true;
+			} else if(fkProperty.PropertyType.Equals(typeof(float))){
+				requiresFloatHelper = true;
+			} else if(fkProperty.PropertyType.Equals(typeof(DateTime))){
+				requiresDateHelper = true;
+			} else if(fkProperty.PropertyType.Equals(typeof(decimal))){
+				requiresDecimalHelper = true;
+			}
+		}
+	}	
+}#>
+<#if(requiresLongHelper){#>
+				long longHelper = default(long);
+<#}#>
+<#if(requiresIntHelper){#>
+				int intHelper = default(int);
+<#}#>
+<#if(requiresDoubleHelper){#>
+				double doubleHelper = default(double);
+<#}#>
+<#if(requiresFloatHelper){#>
+				float floatHelper = default(float);
+<#}#>
+<#if(requiresDateHelper){#>
+				DateTime dateHelper = default(DateTime);
+<#}#>
+<#if(requiresDecimalHelper){#>
+				decimal decimalHelper = default(decimal);
+<#}#>
+
+				<#=entity.Namespace#>.<#=entity.Name#> value = new <#=entity.Namespace#>.<#=entity.Name#>{
+<#foreach(var member in entity.GetProperties().Where(p=>IsOutput(p))){
+	string fieldName = string.Concat("v_",GetFieldPrefixForEntityName(entity.Name), "_", GetFieldTextForName(member.Name));#>
+<#	if(member.PropertyType.Equals(typeof(long))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(long.TryParse(reader["<#=fieldName#>"].ToString(), out longHelper) ? longHelper : -1) : -1,
+<#	} else if(member.PropertyType.Equals(typeof(int))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(int.TryParse(reader["<#=fieldName#>"].ToString(), out intHelper) ? intHelper : -1) : -1,
+<#	} else if(member.PropertyType.Equals(typeof(double))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(double.TryParse(reader["<#=fieldName#>"].ToString(), out doubleHelper) ? doubleHelper : 0.0) : 0.0,
+<#	} else if(member.PropertyType.Equals(typeof(float))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(float.TryParse(reader["<#=fieldName#>"].ToString(), out floatHelper) ? floatHelper : 0.0) : 0.0,
+<#	} else if(member.PropertyType.Equals(typeof(DateTime))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(DateTime.TryParse(reader["<#=fieldName#>"].ToString(), out dateHelper) ? dateHelper : default(DateTime)) : default(DateTime),
+<#	} else if(member.PropertyType.Equals(typeof(decimal))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						(decimal.TryParse(reader["<#=fieldName#>"].ToString(), out decimalHelper) ? decimalHelper : 0.0) : 0.0,
+<#	} else if(member.PropertyType.Equals(typeof(string))){#>
+					<#=member.Name#> = reader["<#=fieldName#>"] != null ? 
+						reader["<#=fieldName#>"].ToString() : string.Empty,
+<#	} else {
+		if(!member.PropertyType.Name.StartsWith("List")){
+			var fkProperty = member.PropertyType.GetProperties().Where(p=>"Identifier".Equals(p.Name)).FirstOrDefault();
+			if(fkProperty!=null) {
+				if(fkProperty.PropertyType.Equals(typeof(long))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member) : member.PropertyType.Name)#> { Identifier = long.TryParse(reader["<#=fieldName#>_Fk"].ToString(), out longHelper) ? longHelper : -1 } : null, 
+<#				} else if(fkProperty.PropertyType.Equals(typeof(int))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member) : member.PropertyType.Name)#> { Identifier = int.TryParse(reader["<#=fieldName#>_Fk"].ToString(), out intHelper) ? intHelper : -1 } : null,
+<#				} else if(fkProperty.PropertyType.Equals(typeof(double))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member) : member.PropertyType.Name)#> { Identifier = double.TryParse(reader["<#=fieldName#>_Fk"].ToString(), out doubleHelper) ? doubleHelper : 0.0 } : null,
+<#				} else if(fkProperty.PropertyType.Equals(typeof(float))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member) : member.PropertyType.Name)#> { Identifier = float.TryParse(reader["<#=fieldName#>_Fk"].ToString(), out floatHelper) ? floatHelper : 0.0 } : null,
+<#				} else if(fkProperty.PropertyType.Equals(typeof(decimal))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member) : member.PropertyType.Name)#> { Identifier = decimal.TryParse(reader["<#=fieldName#>_Fk"].ToString(), out decimalHelper) ? decimalHelper : 0.0 } : null,
+<#				} else if(fkProperty.PropertyType.Equals(typeof(string))){#>
+					<#=member.Name#> = reader["<#=fieldName#>_Fk"] != null ? 
+						new <#=string.Concat(member.PropertyType.Namespace,".",IsGenericProperty(member) ? GetGenericPropertyTypeName(member) : member.PropertyType.Name)#> { Identifier = reader["<#=fieldName#>_Fk"].ToString() },
+<#				}
+			}
+		}
+	}
+}#>
+				};
+                return value;
+            };
+
+
+			dataProvider.CommandType = System.Data.CommandType.StoredProcedure;
+            <#=entity.Namespace#>.<#=entity.Name#> result = dataProvider.ExecuteForEntityWithFilter(SCMS.<#=entity.Namespace.Split('.').ToList().LastOrDefault()#>_SP_Update_<#=entity.Name#>, filterDelegate, filter, mapper);
+            return result;
+		}
+		#endregion
+<#}#>
+<#}#>
+
+		#endregion
+	}
+}
+
+
+<#+
+private readonly string vowels = "aeiouAEIOU"; 
+private readonly Dictionary<Type, DbType> typeMap = new Dictionary<Type, DbType>{ 
+	{ typeof(byte), DbType.Byte },
+	{ typeof(sbyte), DbType.SByte },
+	{ typeof(short), DbType.Int16 },
+	{ typeof(ushort), DbType.UInt16 },
+	{ typeof(int), DbType.Int32 },
+	{ typeof(uint), DbType.UInt32 },
+	{ typeof(long), DbType.Int64 },
+	{ typeof(ulong), DbType.UInt64 },
+	{ typeof(float), DbType.Single },
+	{ typeof(double), DbType.Double },
+	{ typeof(decimal), DbType.Decimal },
+	{ typeof(bool), DbType.Boolean },
+	{ typeof(string), DbType.String },
+	{ typeof(char), DbType.StringFixedLength },
+	{ typeof(Guid), DbType.Guid },
+	{ typeof(DateTime), DbType.DateTime },
+	{ typeof(DateTimeOffset), DbType.DateTimeOffset },
+	{ typeof(byte[]), DbType.Binary },
+	{ typeof(byte?), DbType.Byte },
+	{ typeof(sbyte?), DbType.SByte },
+	{ typeof(short?), DbType.Int16 },
+	{ typeof(ushort?), DbType.UInt16 },
+	{ typeof(int?), DbType.Int32 },
+	{ typeof(uint?), DbType.UInt32 },
+	{ typeof(long?), DbType.Int64 },
+	{ typeof(ulong?), DbType.UInt64 },
+	{ typeof(float?), DbType.Single },
+	{ typeof(double?), DbType.Double },
+	{ typeof(decimal?), DbType.Decimal },
+	{ typeof(bool?), DbType.Boolean },
+	{ typeof(char?), DbType.StringFixedLength },
+	{ typeof(Guid?), DbType.Guid },
+	{ typeof(DateTime?), DbType.DateTime },
+	{ typeof(DateTimeOffset?), DbType.DateTimeOffset },
+	{ typeof(System.Data.Linq.Binary), DbType.Binary }
+};
+
+private bool IsInput(PropertyInfo property){	
+	return property.GetCustomAttributesData().Where(a=>a.AttributeType.Name.Equals("InputFieldAttribute")).Count() > 0;
+}
+
+private bool IsFilter(PropertyInfo property){
+	return property.GetCustomAttributesData().Where(a=>a.AttributeType.Name.Equals("FilterFieldAttribute")).Count() > 0;
+}
+
+private bool IsOutput(PropertyInfo property){
+	return property.GetCustomAttributesData().Where(a=>a.AttributeType.Name.Equals("OutputFieldAttribute")).Count() > 0;
+}
+
+private bool IsPK(PropertyInfo property){
+	return property.GetCustomAttributesData().Where(a=>a.AttributeType.Name.Equals("PrimaryKeyFieldAttribute")).Count() > 0;
+}
+
+private bool IsFK(PropertyInfo property){
+	return property.GetCustomAttributesData().Where(a=>a.AttributeType.Name.Equals("ForeignKeyFieldAttribute")).Count() > 0;
+}
+
+private DbType DBTypeForSystemType(Type t){ 
+	return typeMap[t]; 
+}
+
+private string GetFieldPrefixForEntityName(string entityName){
+	
+	string entityPrefix = string.Empty;
+	
+	int charCount = 0;
+	entityName.ToList().ForEach(c=>{
+		bool skip = false;
+		bool split = charCount > 0 && (charCount%3)==0; 
+		skip = entityPrefix.LastOrDefault().ToString().ToLower().Equals(c.ToString().ToLower()) || (split && !c.ToString().ToUpper().Equals(c.ToString())); 
+		if(!skip)
+		{	
+			if(!isVowel(c) || (charCount%3)==0)
+			{
+				charCount ++;
+				entityPrefix += c.ToString().ToLower();
+			}
+		}
+	});
+	return entityPrefix;
+}
+
+private bool IsGenericProperty(PropertyInfo member)
+{
+	bool isGeneric = false;
+	if(member.PropertyType.GetGenericArguments().Count() > 0) {
+		isGeneric = true;
+	} else {
+		isGeneric = false;
+	}
+	return isGeneric;
+}
+
+private string GetGenericPropertyTypeName(PropertyInfo member){
+	string propertyType = string.Empty;
+	propertyType = member.PropertyType.Name.Substring(0, member.PropertyType.Name.IndexOf("`"));
+	propertyType = string.Concat(propertyType,"<", string.Join(", ", member.PropertyType.GetGenericArguments().Select(a=>a.ToString())), ">");
+	return propertyType;
+}
+
+private string GetFieldTextForName(string name){
+	string fieldText = string.Empty;
+	if("Identifier".Equals(name))
+	{
+		fieldText = "id_Pk";
+		return fieldText;	
+	}
+	int charCount = 0;
+	name.ToList().ForEach(c=>{
+		bool split = charCount> 0 && c.ToString().ToUpper().Equals(c.ToString()); 
+		fieldText += split ? string.Concat("_", c.ToString().ToLower()) : c.ToString().ToLower();
+		charCount ++;
+	});
+	return fieldText;
+}
+
+private bool isVowel(char c){
+	bool isVowel = vowels.IndexOf(c)>-1;
+	return isVowel;
+}
+
+#>

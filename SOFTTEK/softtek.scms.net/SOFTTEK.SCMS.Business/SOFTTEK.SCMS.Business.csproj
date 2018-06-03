@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{55DFA82B-E487-4216-931A-DD3C1908418C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SOFTTEK.SCMS.Business</RootNamespace>
+    <AssemblyName>SOFTTEK.SCMS.Business</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="sapnco">
+      <HintPath>..\Frameworks\sapnco.dll</HintPath>
+    </Reference>
+    <Reference Include="sapnco_utils">
+      <HintPath>..\Frameworks\sapnco_utils.dll</HintPath>
+    </Reference>
+    <Reference Include="SOFTTEK.SCMS.Foundation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Frameworks\SOFTTEK.SCMS.Foundation.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entity\Category.cs" />
+    <Compile Include="Entity\Contact.cs" />
+    <Compile Include="Entity\Employee.cs" />
+    <Compile Include="Entity\Parameter.cs" />
+    <Compile Include="Entity\Person.cs" />
+    <Compile Include="Entity\SRA\ARSDetailedActivity.cs" />
+    <Compile Include="Entity\SRA\Week.cs" />
+    <Compile Include="Entity\Token.cs" />
+    <Compile Include="Entity\User.cs" />
+    <Compile Include="FA\AvailabilityForecastBO.cs" />
+    <Compile Include="FA\AvailabilityForecastItemBO.cs" />
+    <Compile Include="FA\FixedAssetBO.cs" />
+    <Compile Include="FA\ManagementBO.cs" />
+    <Compile Include="FA\NoveltyRequestBO.cs" />
+    <Compile Include="FA\PhysicalInventoryTakingBO.cs" />
+    <Compile Include="FA\PhysicalInventoryTakingItemBO.cs" />
+    <Compile Include="FA\ProviderBO.cs" />
+    <Compile Include="FA\PurchaseRequestBO.cs" />
+    <Compile Include="FA\RequestBO.cs" />
+    <Compile Include="FA\RetirementRequestBO.cs" />
+    <Compile Include="FA\TechnicalEvaluationRequestBO.cs" />
+    <Compile Include="FA\TransferRequestBO.cs" />
+    <Compile Include="FA\WorkOrderBO.cs" />
+    <Compile Include="PM\ActivityBO.cs" />
+    <Compile Include="PM\AdviceBO.cs" />
+    <Compile Include="PM\ComponentReplacementBO.cs" />
+    <Compile Include="PM\MaintenanceBO.cs" />
+    <Compile Include="PM\MaintenancePlanBO.cs" />
+    <Compile Include="PM\MasterDataBO.cs" />
+    <Compile Include="PM\MaterialBO.cs" />
+    <Compile Include="PM\MeasureBO.cs" />
+    <Compile Include="PM\MeasurementDocumentBO.cs" />
+    <Compile Include="PM\TaskBO.cs" />
+    <Compile Include="PM\TechnicalObjectBO.cs" />
+    <Compile Include="PM\WorkOrderBO.cs" />
+    <Compile Include="SRA\ActivityBO.cs" />
+    <Compile Include="SRA\EmployeeBO.cs" />
+    <Compile Include="Common\ContentBO.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\SecurityBO.cs" />
+    <Compile Include="Common\ConfigurationBO.cs" />
+    <Compile Include="SRA\PermitsAndAbsencesBO.cs" />
+    <Compile Include="TIME.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SOFTTEK.SAP.Integration\SOFTTEK.SAP.Integration.csproj">
+      <Project>{f4f1278c-029e-41bb-ad6c-54bb6469b341}</Project>
+      <Name>SOFTTEK.SAP.Integration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SOFTTEK.SCMS.Data\SOFTTEK.SCMS.Data.csproj">
+      <Project>{4daf155c-36c7-46ca-8c4b-90ee7d98d188}</Project>
+      <Name>SOFTTEK.SCMS.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SOFTTEK.SCMS.Entity\SOFTTEK.SCMS.Entity.csproj">
+      <Project>{49ef75f0-469b-468e-823d-bd38d1ad991b}</Project>
+      <Name>SOFTTEK.SCMS.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PlantMaintenance\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

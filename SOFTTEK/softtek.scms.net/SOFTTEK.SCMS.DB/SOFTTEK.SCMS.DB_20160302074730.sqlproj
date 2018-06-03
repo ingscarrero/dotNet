@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>SOFTTEK.SCMS.DB</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{8ce5b14a-f91d-46f9-bb0a-a0a67cf78870}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>SOFTTEK.SCMS.DB</RootNamespace>
+    <AssemblyName>SOFTTEK.SCMS.DB</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <GenerateCreateScript>True</GenerateCreateScript>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>0</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <!-- VS10 without SP1 will not have VisualStudioVersion set, so do that here -->
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Tables" />
+    <Folder Include="Procedures" />
+    <Folder Include="Functions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\TBL_SCMS_MOBILE_MENU.sql" />
+    <Build Include="Procedures\spSCMSGetMobileAppMenuItems.sql" />
+    <Build Include="Tables\TBL_SCMS_USER.sql" />
+    <Build Include="Tables\TBL_SCMS_TOKEN.sql" />
+    <Build Include="Procedures\spSCMSAuthorize.sql" />
+    <Build Include="Procedures\spSCMSCreateUser.sql" />
+    <Build Include="Procedures\spSCMSGetToken.sql" />
+    <Build Include="Tables\TBL_SCMS_PARAM_CATEGORY.sql" />
+    <Build Include="Tables\TBL_SCMS_PARAM.sql" />
+    <Build Include="Tables\TBL_SCMS_PARAM_TYPE.sql" />
+    <Build Include="Procedures\spSCMSGetParametersByCategory.sql" />
+    <Build Include="Procedures\spSCMSAddParameterCategory.sql" />
+    <Build Include="Procedures\spSCSMAddParameterForCategory.sql" />
+    <Build Include="Procedures\spSCMSUpdateParameterForCategory.sql" />
+    <Build Include="Tables\TBL_SCMS_VIEW.sql" />
+    <Build Include="Tables\TBL_SCMS_APP.sql" />
+    <Build Include="Tables\TBL_SCMS_ROLE.sql" />
+    <Build Include="Tables\TBL_SCMS_VIEWS_BY_PROFILE.sql" />
+    <Build Include="Tables\TBL_SCMS_PROFILES_BY_ROLE.sql" />
+    <Build Include="Tables\TBL_SCMS_USERS_BY_ROLE.sql" />
+    <Build Include="Tables\TBL_SCMS_PROFILE.sql" />
+    <Build Include="Tables\TBL_SRA_EMPLOYEE.sql" />
+    <Build Include="Tables\TBL_SRA_CONTACT.sql" />
+    <Build Include="Tables\TBL_SRA_PERSON.sql" />
+    <Build Include="Procedures\spSRAGetEmployeeByToken.sql" />
+    <Build Include="Functions\fnCheckGender.sql" />
+    <Build Include="Procedures\spSRAGetEmployeeById.sql" />
+    <Build Include="Tables\TBL_FAM_INVENTORY.sql" />
+    <Build Include="Tables\TBL_FAM_NOVELTY.sql" />
+    <Build Include="Tables\TBL_FAM_EMPLACEMENT.sql" />
+    <Build Include="Tables\TBL_SRA_ACTIVITY.sql" />
+    <Build Include="Procedures\spSRAGetEmployeeActivitiesInPeriod.sql" />
+    <Build Include="Functions\fnSRACheckActivityCode.sql" />
+    <Build Include="Procedures\spSRAInsertEmployeeActivity.sql" />
+    <Build Include="Procedures\spSRAUpdateEmployeeActivity.sql" />
+    <Build Include="Functions\fnSRACheckActivityJornadeType.sql" />
+    <Build Include="Procedures\spSRAGetEmployeeActivitiesForApproval.sql" />
+    <Build Include="Tables\TBL_SRA_PERMITS_AND_ABSENCES.sql" />
+    <Build Include="Functions\fnSRACheckPermitsAndAbsencesCode.sql" />
+    <Build Include="Procedures\spSRAInsertPermitsAndAbsences.sql" />
+    <Build Include="Procedures\spSRAUpdatePermitsAndAbsences.sql" />
+    <Build Include="Procedures\spSRAGetEmployeeIdForPermitsAndAbsences.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="SOFTTEK.SCMS.DB.refactorlog" />
+  </ItemGroup>
+</Project>

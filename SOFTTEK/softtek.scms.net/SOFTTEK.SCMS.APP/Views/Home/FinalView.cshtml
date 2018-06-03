@@ -1,0 +1,398 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Semantic.cshtml";
+}
+
+<link href="~/Content/StyleMockUp.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/CryptoJS%20v3.1.2/components/core-min.js"></script>
+<script src="~/Scripts/CryptoJS%20v3.1.2/components/enc-base64-min.js"></script>
+<script src="~/Scripts/CryptoJS%20v3.1.2/rollups/sha256.js"></script>
+<script src="~/Scripts/CryptoJS%20v3.1.2/rollups/pbkdf2.js"></script>
+<script src="~/Scripts/CryptoJS%20v3.1.2/rollups/aes.js"></script>
+<script src="~/Scripts/SCMSWeb/Security.js"></script>
+<script src="~/Scripts/SCMSWeb/App.js"></script>
+
+<div class="stk body">
+    <input type="hidden" name="Token" value="" id="token" />
+    <div id="menuContainer" class="stk container_menu">
+        <div class="stk opacity_menu" id="menuOpacity">
+
+        </div>
+        <div class="stk floating_menu" id="divMenuFlotante" style="float: left !important;">
+            <div class="ui field" style="display:inline-block; z-index: 10 !important; margin-bottom:5%;" id="divBtnMenu2">
+                <button class="ui black launch button stk btn_menu" id="btnMenu2">
+                    <i class="ui content icon"></i>
+                </button>
+            </div>
+            <div class="ui field">
+                <p id="employee">
+            </div>
+            <div class="ui field center">
+                <center><input type="button" id="refresh_btn" value="Refresh" class="ui negative button" /></center>
+            </div>
+            <br />
+            <hr />
+            <div class="ui field">
+                <ul id="menu_items"></ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="stk top_frame">
+        <div class="ui secondary menu" style="margin-left:20% !important; width:80% !important; position:absolute !important;">
+            <div class="ui right menu" id="menu_right">
+                <div class="ui item ">
+                    <div class="ui icon input">
+                        <input type="text" placeholder="Search..." style="width:40%;">
+                        <i class="ui search link icon"></i>
+                    </div>
+                </div>
+                <button class="ui closeSesion button" id="modalClose">Cerrar Sesión</button>
+                <div class="ui popup" style="width:15% !important;">
+                    <div class="ui one column relaxed divided grid">
+                        <div class="ui column">
+                            <h4 class="ui header">Opciones</h4>
+                            <div class="ui link list">
+                                <a class="ui item"><i class="ui edit icon"></i> Nuestra Plataforma</a>
+                                <a class="ui item"><i class="ui globe icon"></i> Acerca de Softteke</a>
+                                <a class="ui item"><i class="ui external icon"></i> Salir</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stk one_quarter_circle">
+            <div class="ui field" style="margin-top:3%; margin-left:3%; display:inline-block; z-index: 10 !important;" id="divBtnMenu">
+                <input type="hidden" name="EmployeeID" value="" id="employee_id" />
+                <button class="ui black launch button stk btn_menu" id="btnMenu">
+                    <i class="ui content icon"></i>
+                </button>
+            </div>
+            <img src="~/Images/softtek.png" class="stk softtek_logo" />
+        </div>
+        <div class="stk menu">
+
+        </div>
+        <div class="stk user_information"></div>
+    </div>
+
+    <div id="menuPrin" class="stk principal_menu">
+        <div class="stk secundary_container">
+            <div class="ui menu">
+                <a class="ui browse item" id="modalid">
+                    <i class="cart icon"></i>
+                    Menu
+                </a>
+                <div class="ui fluid popup">
+                    <div class="ui four column relaxed divided grid" id="divItemsMenu">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="box1" class="stk box blurred-bg principalFrame">
+        <div class="stk content" style="border:none !important">
+            <div class="stk contentInput" id="divcontent">
+                <div class="stk title_content">
+                    <h1 style="color:white">Iniciar Sesión</h1>
+                </div>
+                <br />
+                <div class="ui divider"></div>
+                <div class="ui column grid basic segment" style="margin-top:10%!important; border:none !important">
+                    <div class="ui column" style="border:none !important">
+                        <div class="ui black stacked stk transparent_background">
+                            <form id="authentication" method="post" class="ui form">
+                                <input type="hidden" name="DeviceIdentifier" value="DELL-09182098321" />
+                                <div class="ui two fields">
+                                    <div class="ui field" style="width:60% !important; margin-left:20% !important; margin-right:10% !important;">
+                                        <div class="ui right labeled icon input">
+                                            <input type="text" name="NetworkAccount" placeholder="Usuario" />
+                                            <i class="ui user icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ui field" style="width:40% !important; text-align:left; padding-top:10px; margin-left:-11% !important">
+                                        <div class="ui field stk vertical-centered-text_left"><h3>@@Softtek.com</h3></div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="ui three fields">
+                                    <div class="ui sixteen wide field stk medium_size">
+                                        <div class="ui right labeled icon input">
+                                            <input type="password" name="Password" placeholder="Contraseña">
+                                            <i class="ui lock icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui divider"></div>
+                                <center><input type="button" id="login_button" value="Login" class="ui teal big circular button stk space_Content" /></center>
+                            </form>
+                            <div class="ui icon message stk error_message" id="menssageError" style="">
+                                <i class="ui notched circle loading icon"></i>
+                                <div class="stk content">
+                                    <div class="ui header">
+                                        Por favor complete los datos necesarios para iniciar sesión.
+                                    </div>
+                                    <p>Alerta.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="stk footer_s" style="text-align:center; padding-top:1%;">
+        <h3><em>SOFTTEK COLOMBIA</em></h3>
+        <p>Copyright © Todos los Derechos Reservados</p>
+    </div>
+</div>
+<input type="hidden" name="EmployeeID" value="" id="employee_id" />
+
+<div id="contentSpecific">
+    <div class="stk rectangle">
+        <br />
+        <div class="ui field">
+            <button class="ui teal circular massive icon button">
+                <i class="ui save icon"></i>
+            </button>
+        </div>
+        <br />
+        <div class="ui field">
+            <button class="ui black circular massive icon button">
+                <i class="ui refresh icon"></i>
+            </button>
+        </div>
+        <br />
+        <div class="ui field">
+            <button class="ui gray circular massive icon button">
+                <i class="ui upload icon"></i>
+            </button>
+        </div>
+    </div>
+    <form id="advice" method="post" class="ui form">
+        <input type="number" name="Identifier" id="Identifier" value="1" />
+        <input type="text" name="ExternalIdentifier" id="ExternalIdentifier" value="1" />
+        <input type="text" name="Priority" id="Priority" value="1" />
+        <input type="text" name="Type" id="Type" value="1" />
+        <input type="text" name="DeviceType" id="DeviceType" value="1" />
+        <input type="text" name="Comments" id="Comments" value="1" />
+
+        <div class="field">
+            <center><input type="button" id="btnModelAdvice" value="ENVIAR" class="ui teal big circular button stk space_Content" /></center>
+        </div>
+   </form>
+    <form id="workOrder" method="post" class="ui form">
+        <input type="number" name="Identifier" id="Identifier"  />
+        <input type="text" name="ExternalIdentifier" id="ExternalIdentifier" />
+        <input type="text" name="Type" id="Type" />
+        <input type="text" name="Company" id="Company" />
+        <input type="text" name="Priority" id="Priority" />
+        <input type="text" name="Performer" id="Performer" />
+        <input type="text" name="State" id="State" />
+        <input type="text" name="TechnicalObject" id="TechnicalObject" />
+        <input type="text" name="ScheduledTo" id="ScheduledTo" />
+        <input type="text" name="ExecutionStartAt" id="ExecutionStartAt" />
+        <input type="text" name="ExecutionFinishedAt" id="ExecutionFinishedAt" />
+        <div class="field">
+            <center><input type="button" id="btnModelWork" value="ENVIAR" class="ui teal big circular button stk space_Content" /></center>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+    $(document)
+     .ready(function () {
+         //$(".box").draggable();
+         $('#menssageError').hide('fast');
+         $('#contentSpecific').hide('fast');
+         $('#menuPrin').hide('fast');
+         $('#divBtnMenu').hide('fast');
+         $('#menuContainer').hide('fast');
+         $('#menu_right').hide('fast');
+
+         $('#modalid').click(function () {
+             $('#modaldiv').modal('show');
+         });
+
+         $('.stk.secundary_container .menu .browse').popup({
+             inline: true,
+             hoverable: true,
+             position: 'bottom left',
+             delay: {
+                 show: 300,
+                 hide: 800
+             }
+         });
+
+         $('#modalClose').popup({
+             inline: true,
+             hoverable: true,
+             position: 'bottom right',
+             delay: {
+                 show: 300,
+                 hide: 800
+             }
+         });
+
+         $("#btnMenu").click(function () {
+             $("#btnMenu").each(function () {
+                 displaying = $('#menuContainer').css("display");
+                 if (displaying == "block") {
+                     $('#menuContainer').fadeOut('slow', function () {
+                         $(this).css("display", "none");
+                     });
+                 } else {
+                     $('#menuContainer').fadeIn('slow', function () {
+                         $(this).css("display", "block");
+                     });
+                 }
+             });
+         });
+
+         $("#btnMenu2").click(function () {
+             $("#btnMenu2").each(function () {
+                 displaying = $('#menuContainer').css("display");
+                 if (displaying == "block") {
+                     $('#menuContainer').fadeOut('slow', function () {
+                         $(this).css("display", "none");
+                     });
+                 } else {
+                     $('#menuContainer').fadeIn('slow', function () {
+                         $(this).css("display", "block");
+                     });
+                 }
+             });
+         });
+
+         $("#menuOpacity").click(function () {
+             $("#menuOpacity").each(function () {
+                 displaying = $('#menuContainer').css("display");
+                 if (displaying == "block") {
+                     $('#menuContainer').fadeOut('slow', function () {
+                         $(this).css("display", "none");
+                     });
+                 } else {
+                     $('#menuContainer').fadeIn('slow', function () {
+                         $(this).css("display", "block");
+                     });
+                 }
+             });
+         });
+        
+
+         AppSCMS.init();
+         var app = 'core';
+         var htmlrender = $('#contentSpecific').html();
+
+
+         $('#login_button').click(function () {
+
+             var authentication = AppSCMS.parseToObject('#authentication');
+             var NetworkAccount = authentication.NetworkAccount;
+             var Password = authentication.Password;
+             if ((NetworkAccount = null || NetworkAccount == "" || typeof (NetworkAccount) === "undefined") || (Password = null || Password == "" || typeof (Password) === "undefined")) {
+                 $('#menssageError').show();
+             }
+             else {
+
+                 var credentials = AppSCMS.parseToSecureObject('#authentication');
+                 $('#divContent').show();
+                 SecuritySCMS.authenticate(app, credentials, function (data) {
+                     $('#token').val(data.Identifier);
+                     AppSCMS.deviceID.set(SecuritySCMS.encrypt('DELL-09182098321'));
+                     AppSCMS.token.set($('#token').val());
+                     AppSCMS.app.set(app);
+
+                     AppSCMS.retrieveAppMenu(function (data) {
+                         $(data).each(function (i, item) {
+                             $('#divItemsMenu').append('<div class="column"><h4 class="ui header">' + item.Title + '</h4>' +
+                            '<div class="ui link list">' +
+                                '<a class="item">Item 1</a>' +
+                                '<a class="item">Item 2</a>' +
+                                '<a class="item">Item 3</a>' +
+                                '<a class="item">Item 4</a>' +
+                            '</div></div>'
+                            );
+                         });
+                     }, null);
+
+
+                     AppSCMS.retrieveAppMenu(function (data) {
+                         $(data).each(function (i, item) {
+                             $('#menu_items').append('<li><a href="">' + item.Title + '</a></li>');
+                         });
+                     }, null);
+
+                     AppSCMS.retrieveEmployeeInformationForToken(function (data) {
+                         var employeeID = data.Identifier;
+                         $('#employee').append('<p><b>Información del empleado:</b></p>');
+                         $('#employee').append('<br/>');
+                         $('#employee').append('<img class="picture imageCenter" src="#" alt="' + data.Person.FullName + '" style="width:100px; height:100px; border-radius:50px;" /><br/>');
+                         $('#employee').append('<p>');
+                         $('#employee').append('<b>Nombre:</b> ' + data.Person.FullName);
+                         $('#employee').append('<br/>');
+                         $('#employee').append('<b>Area:</b> ' + data.Area);
+                         $('#employee').append('<br/>');
+                         $('#employee').append('<b>Rol:</b> ' + data.Role);
+                         $('#employee').append('<br/>');
+                         $('#employee').append('<b>Superior Inmediato:</b> ' + data.Supervisor.Person.FullName);
+                         $('#employee').append('</p>');
+                         $('#employee').append('<br/>');
+                         $('#employee_id').val(employeeID);
+
+                         AppSCMS.retrieveEmployeeImageForEmployeeId(employeeID, function (data) {
+                             $('.picture').attr('src', 'data:image/png;base64,' + data);
+                         }, null);
+
+                         AppSCMS.retriveSRAWeekInformation(employeeID, function (data) {
+                         }, null);
+
+                         var workOrder = AppSCMS.parseToObject('#workOrder');
+                         AppSCMS.selectWorkOrders(workOrder, function (data) {
+                         }, null);
+
+                         var activity = AppSCMS.parseToObject('#advice');
+                         //activity.Task = { "Identifier": 1 };
+                         //activity.TechnicalObject = { "Identifier": 1 };
+                         activity.Task = null;
+                         activity.TechnicalObject = null;
+
+                         AppSCMS.registerPMAdvice(activity, function (data) {
+                         }, function (data) {
+                         });
+                     }, null);
+                 });
+                 $('#menuPrin').show('fast');
+                 $('#divcontent').html('');
+                 $('#divcontent').append(htmlrender);
+                 $('#box1').addClass('stk spacing_box');
+                 $('#divBtnMenu').show('fast');
+                 $('#divLogin').hide('fast');
+                 $('#menu_right').show('fast');
+             }
+         });
+
+         $('#btnModelAdvice').click(function () {
+             AppSCMS.deviceID.set(SecuritySCMS.encrypt('DELL-09182098321'));
+             AppSCMS.token.set($('#token').val());
+             AppSCMS.app.set(app);
+             console.log("hola :)");
+             var activity = AppSCMS.parseToObject('#advice');
+             activity.Task = { "Identifier": 1 };
+             activity.TechnicalObject = { "Identifier": 1 };
+
+             AppSCMS.registerPMAdvice(activity, function (data) {
+             }, function (data) {
+             });
+         });
+     });
+</script>

@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SOFTTEK.SCMS.Test.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SCMS_SALTBytes" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">UHJ1ZWJhIGRlIGNvZGlmaWNhY2nDs24=</Value>
+    </Setting>
+    <Setting Name="SCMS_Password" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Softtek_Renovation_SCSM_2015</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
